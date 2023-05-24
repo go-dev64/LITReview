@@ -23,22 +23,27 @@ from django.contrib.auth.views import (
 )
 from django.urls import path, include
 from authentication import views as auth_views
+from allauth.account import views as account_views
 from post import views as post_views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path(
         "",
-        LoginView.as_view(
-            template_name="authentication/login.html",
-            redirect_authenticated_user=True,
+        account_views.LoginView.as_view(
+            # template_name="authentication/login.html",
+            # redirect_authenticated_user=True,
         ),
-        name="login",
+        name="account_login",
     ),
-    path("logout/", LogoutView.as_view(), name="logout"),
     path(
-        "change-password/",
-        PasswordChangeView.as_view(
+        "accounts/logout/",
+        account_views.LogoutView.as_view(),
+        name="account_logout",
+    ),
+    path(
+        "accounts/password/change/",
+        account_views.PasswordChangeView.as_view(
             template_name="authentication/change_password.html"
         ),
         name="password_change",
@@ -50,9 +55,6 @@ urlpatterns = [
         ),
         name="password_change_done",
     ),
-    path("signup/", auth_views.signup_page, name="signup"),
     path("home/", post_views.home, name="home"),
-    #
-    #
     path("accounts/", include("allauth.urls")),
 ]
