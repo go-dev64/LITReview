@@ -50,5 +50,6 @@ urlpatterns = [
         ),
         name="password_change_done",
     ),
+    path("signup/", auth_views.signup_page, name="signup"),
     path("home/", post_views.home, name="home"),
 ]
