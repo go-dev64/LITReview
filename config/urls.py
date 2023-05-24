@@ -21,7 +21,7 @@ from django.contrib.auth.views import (
     PasswordChangeView,
     PasswordChangeDoneView,
 )
-from django.urls import path
+from django.urls import path, include
 from authentication import views as auth_views
 from post import views as post_views
 
@@ -52,4 +52,7 @@ urlpatterns = [
     ),
     path("signup/", auth_views.signup_page, name="signup"),
     path("home/", post_views.home, name="home"),
+    #
+    #
+    path("accounts/", include("allauth.urls")),
 ]
