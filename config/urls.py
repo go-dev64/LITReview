@@ -21,6 +21,7 @@ from django.contrib.auth.views import (
     PasswordChangeView,
     PasswordChangeDoneView,
 )
+from django.shortcuts import redirect
 from django.urls import path, include
 from authentication import views as auth_views
 from allauth.account import views as account_views
@@ -34,7 +35,13 @@ urlpatterns = [
             template_name="authentication/login.html",
             # redirect_authenticated_user=True,
         ),
-        name="account_login",
+        name="login",
+    ),
+    path(
+        "accounts/signup/",
+        account_views.SignupView.as_view(
+            template_name="authentication/signup.html",
+        ),
     ),
     path(
         "accounts/logout/",
