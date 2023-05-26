@@ -25,3 +25,18 @@ def create_ticket(request):
             ticket.save()
             return redirect("home")
     return render(request, "post/create_ticket.html", context={"form": form})
+
+
+@login_required
+def create_review(request):
+    form = forms.ReviewForm()
+    if request.method == "POST":
+        form = forms.TicketForm(request.POST, request.FILES)
+        if form.is_valid():
+            ticket = form.save(commit=False)
+            # set the uploader to the user before saving the model
+            ticket.user = request.user
+            # now we can save
+            ticket.save()
+            return redirect("home")
+    return render(request, "post/create_ticket.html", context={"form": form})

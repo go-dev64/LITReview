@@ -18,14 +18,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.views import (
-    LoginView,
-    LogoutView,
-    PasswordChangeView,
     PasswordChangeDoneView,
 )
 from django.shortcuts import redirect
 from django.urls import path, include
 from allauth.account import views as account_views
+from authentication import views as auth_views
 from post import views as post_views
 
 urlpatterns = [
@@ -62,6 +60,11 @@ urlpatterns = [
             template_name="authentication/change_password_done.html"
         ),
         name="password_change_done",
+    ),
+    path(
+        "profile_photo",
+        auth_views.upload_profile_photo,
+        name="upload_profile_photo",
     ),
     path("home/", post_views.home, name="home"),
     path(

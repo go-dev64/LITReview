@@ -1,9 +1,10 @@
 from django.shortcuts import redirect, render
-from django.contrib.auth import login, authenticate, logout
-from django.views.generic import View
+from django.contrib.auth import login
 from django.conf import settings
 
-from authentication import forms
+from post.models import Photo
+
+from . import forms
 
 
 def signup_page(request):
@@ -16,4 +17,21 @@ def signup_page(request):
             return redirect(settings.LOGIN_REDIRECT_URL)
     return render(
         request, "authentication/signup.html", context={"form": form}
+    )
+
+
+def upload_profile_photo(request):
+    form = forms.UploadProfilePhotoForm(instance=request.user)
+    if request.method == "POST":
+        form = forms.UploadProfilePhotoForm(
+            request.POST, request.FILES, instance=request.user
+        )
+        if form.is_valid():
+            form.save()
+            Photo.save()
+            return redirect("home")
+    return render(
+        request,
+        "authentication/upload_profile_photo.html",
+        context={"form": form},
     )

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -11,34 +12,58 @@
     <title>LITReview</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand">
-        <div class="container">
-            <div class="col-6 text-center">
-                <h1 class="fw-bold">LITReview</h1>
-            </div>
-        </div>
-        <div class="col-6">
-            {% if user.is_authenticated %}
-                <span class="bg-primary bg-gradient p-1 rounded-3 text-light">{{ user.username}}</span>
+    <header>
+        <nav class="navbar navbar-expand-md fixed-top navbar-light bg-light">
+            <div class="container-fluid">
+              <a class="navbar-brand text-uppercase fw-bold" href="#">
+                <span class="bg-primary bg-gradient p-1 rounded-3 text-light">LITReview</span>
+              </a>
+              
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              {%  if user.is_authenticated %}
+              <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#flux">Flux</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#post">Post</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#Abonnements">Abonnements</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'account_logout' %}">Se deconnecter</a>
-                    </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#flux">Flux</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#post">Post</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#Abonnements">Abonnements</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account_logout' %}">Se deconnecter</a>
+                  </li>
                 </ul>
+              </div>
+            </div>
             {% endif %}
+          </nav>
+    </header>
+    <main class="">
+      <div class="">
+        <div class="sidebar">
+          {% if user.is_authenticated %}
+            <p class ="">Hello, {{ user }} !</p>
+            {% if user.profil_photo %}
+              <img class="avatar" src={{ user.profil_photo.url }}>
+            {% else %}
+              <img class="avatar" src="{% static 'images/default_profile.png'%}">
+            {% endif %}
+            <p><a href="{% url 'upload_profile_photo' %}">Changer la photo de profil</a></p>
+            <p><a href="#{% url 'password_change' %}">Changer le mot de passe</a></p>
+            <p><a href="{% url 'home' %}">Accueil</a></p>
+          {% endif %}
         </div>
-    </nav>
-    <main>
-        {% block content %}{% endblock content %}
+        <div class="main">
+          {% block content %}{% endblock content %}
+        </div>
+
+      </div>
     </main>
     <footer></footer>
     

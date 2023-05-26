@@ -21,3 +21,9 @@ class ReviewForm(forms.ModelForm):
             "headline",
             "body",
         ]
+
+
+class PhotoForm(forms.ModelForm):
+    class Meta:
+        model = models.Photo
+        fields = ["image", "caption"]

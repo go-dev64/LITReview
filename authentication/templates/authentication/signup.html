@@ -4,6 +4,9 @@
     <div class="row align-items-center">
         <div class="col-12 text-center">
             <h2>Inscription</h2>
+            {% if form.errors %}
+                {{ form.errors }}
+            {% endif %}
             <form method="post">
                 {{ form.as_p }}
                 {% csrf_token %}
