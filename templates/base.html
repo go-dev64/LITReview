@@ -12,10 +12,10 @@
     <title>LITReview</title>
 </head>
 <body>
-    <header>
+    <header class="py-4">
         <nav class="navbar navbar-expand-md fixed-top navbar-light bg-light">
             <div class="container-fluid">
-              <a class="navbar-brand text-uppercase fw-bold" href="#">
+              <a class="navbar-brand text-uppercase fw-bold" href="{% url 'home' %}">
                 <span class="bg-primary bg-gradient p-1 rounded-3 text-light">LITReview</span>
               </a>
               
@@ -44,15 +44,15 @@
             {% endif %}
           </nav>
     </header>
-    <main class="">
-      <div class="">
-        <div class="sidebar">
+    <main class="row my-5">
+      <div class="col-4">
+        <div class="sidebar w-90">
           {% if user.is_authenticated %}
             <p class ="">Hello, {{ user }} !</p>
             {% if user.profil_photo %}
-              <img class="avatar" src={{ user.profil_photo.url }}>
+              <img class="avatar w-80" src={{ user.profil_photo.url }} w-80>
             {% else %}
-              <img class="avatar" src="{% static 'images/default_profile.png'%}">
+              <img class="avatar w-80" src="{% static 'images/default_profile.png'%}">
             {% endif %}
             <p><a href="{% url 'upload_profile_photo' %}">Changer la photo de profil</a></p>
             <p><a href="#{% url 'password_change' %}">Changer le mot de passe</a></p>

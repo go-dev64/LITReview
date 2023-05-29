@@ -28,7 +28,6 @@ def upload_profile_photo(request):
         )
         if form.is_valid():
             form.save()
-            Photo.save()
             return redirect("home")
     return render(
         request,

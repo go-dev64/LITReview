@@ -32,7 +32,6 @@ urlpatterns = [
         "",
         account_views.LoginView.as_view(
             template_name="authentication/login.html",
-            # redirect_authenticated_user=True,
         ),
         name="login",
     ),
@@ -44,7 +43,9 @@ urlpatterns = [
     ),
     path(
         "accounts/logout/",
-        account_views.LogoutView.as_view(),
+        account_views.LogoutView.as_view(
+            template_name="authentication/logout.html"
+        ),
         name="account_logout",
     ),
     path(
@@ -67,6 +68,7 @@ urlpatterns = [
         name="upload_profile_photo",
     ),
     path("home/", post_views.home, name="home"),
+    path("photo/upload/", post_views.photo_uploader, name="photo_upload"),
     path(
         "post/create-ticket/", post_views.create_ticket, name="create_ticket"
     ),
