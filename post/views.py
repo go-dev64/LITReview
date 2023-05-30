@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 
 from post import models
 
@@ -14,17 +14,23 @@ def home(request):
 
 @login_required
 def create_ticket(request):
-    form = forms.TicketForm()
+    ticket_form = forms.TicketForm()
+    photo_form = forms.PhotoForm()
     if request.method == "POST":
-        form = forms.TicketForm(request.POST, request.FILES)
-        if form.is_valid():
-            ticket = form.save(commit=False)
-            # set the uploader to the user before saving the model
+        ticket_form = forms.TicketForm(request.POST)
+        photo_form = forms.PhotoForm(request.POST, request.FILES)
+        if all([ticket_form.is_valid(), photo_form.is_valid()]):
+            photo = photo_form.save(commit=False)
+            photo.uploader = request.user
+            photo.save()
+            ticket = ticket_form.save(commit=False)
             ticket.user = request.user
-            # now we can save
+            ticket.image = photo
             ticket.save()
             return redirect("home")
-    return render(request, "post/create_ticket.html", context={"form": form})
+
+    context = {"ticket_form": ticket_form, "photo_form": photo_form}
+    return render(request, "post/create_ticket.html", context=context)
 
 
 @login_required
@@ -40,6 +46,12 @@ def create_review(request):
             ticket.save()
             return redirect("home")
     return render(request, "post/create_ticket.html", context={"form": form})
+
+
+@login_required
+def view_ticket(request, ticket_id):
+    ticket = get_object_or_404(models.Ticket, id=ticket_id)
+    return render(request, "post/view_ticket.html", {"ticket": ticket})
 
 
 @login_required

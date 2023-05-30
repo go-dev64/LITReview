@@ -9,7 +9,6 @@ class TicketForm(forms.ModelForm):
         fields = [
             "title",
             "description",
-            "image",
         ]
 
 

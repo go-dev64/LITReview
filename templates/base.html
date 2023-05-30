@@ -8,7 +8,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'app.css' %}">
     <script src="https://kit.fontawesome.com/14273d579a.js" crossorigin="anonymous"></script>
+
     <title>LITReview</title>
 </head>
 <body>
@@ -45,14 +47,14 @@
           </nav>
     </header>
     <main class="row my-5">
-      <div class="col-4">
-        <div class="sidebar w-90">
+      <div class="col">
+        <div class="sidebar">
           {% if user.is_authenticated %}
-            <p class ="">Hello, {{ user }} !</p>
+            <p class ="my-5">Hello, {{ user }} !</p>
             {% if user.profil_photo %}
-              <img class="avatar w-80" src={{ user.profil_photo.url }} w-80>
+              <img class="avatar" src={{ user.profil_photo.url }}>
             {% else %}
-              <img class="avatar w-80" src="{% static 'images/default_profile.png'%}">
+              <img class="avatar" src="{% static 'images/default_profile.png'%}">
             {% endif %}
             <p><a href="{% url 'upload_profile_photo' %}">Changer la photo de profil</a></p>
             <p><a href="#{% url 'password_change' %}">Changer le mot de passe</a></p>
@@ -66,6 +68,5 @@
       </div>
     </main>
     <footer></footer>
-    
 </body>
 </html>

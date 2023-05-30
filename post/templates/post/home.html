@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Page Home de app_post</h1>
     <h2>Tickets</h2>
-    {% for ticket in tickets %}
-    <h3>{{ ticket.title}} </h3>
-    <p>{{ticket.description}} </p>
-    <img src="{{ticket.image.url}}" alt="">
-    <p> date de creation :{{ticket.time_created}}</p>
-    {% endfor %}
+    <div class="grid-container">
+        {% for ticket in tickets %}
+            <div class="ticket">
+                <a href="{% url 'view_ticket' ticket.id %}">
+                <h3>{{ticket.title}}</h3>
+                <p>{{ticket.description}} </p>
+                <img src="{{ticket.image.image.url}}" alt="">
+                <p> date de creation :{{ticket.time_created}}</p>
+            </div>
+        {% endfor %}
+    </div>
     <a href="{% url 'create_ticket' %}">creer un ticket</a>
-    <p>Vous êtes connecté !</p>
-    <a href="{% url 'account_change_password' %}"> Modifier votre mot de passe</a>
 {% endblock content %}

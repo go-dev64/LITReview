@@ -10,6 +10,7 @@
             <form method="post">
                 {{ form.as_p }}
                 {% csrf_token %}
+                <a class="btn btn-secondary" href="{% url 'home' %}" role="button">Annuler</a>
                 <button class="btn btn-primary" type="submit" >S’inscrire</button>
             </form>
         </div>

@@ -12,7 +12,7 @@ class Photo(models.Model):
     )
     date_created = models.DateTimeField(auto_now_add=True)
 
-    IMAGE_MAX_SIZE = (800, 800)
+    IMAGE_MAX_SIZE = (600, 600)
 
     def resize_image(self):
         image = Image.open(self.image)
@@ -20,7 +20,7 @@ class Photo(models.Model):
         image.save(self.image.path)
 
     def save(self, *args, **kwargs):
-        super().save(**args, **kwargs)
+        super().save(*args, **kwargs)
         self.resize_image()
 
 

@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>{{ticket.title}}</h2>
+    <img src="{{ ticket.image.image.url}}" alt="">
+    <p>{{ ticket.description}} </p>
+    <p> {{ ticket.time_created}}</p>
+{% endblock content %}
+
