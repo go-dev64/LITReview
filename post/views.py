@@ -34,6 +34,37 @@ def create_ticket(request):
 
 
 @login_required
+def edit_ticket(request, ticket_id):
+    ticket = get_object_or_404(models.Ticket, id=ticket_id)
+    edit_form = forms.TicketForm(instance=ticket)
+    delete_form = forms.DeleteTicketForm()
+    if request.method == "POST":
+        print(request.POST)
+        if "edit_ticket" in request.POST:
+            edit_form = forms.TicketForm(request.POST, instance=ticket)
+            if edit_form.is_valid():
+                edit_form.save()
+                return redirect("home")
+
+        if "delete_ticket" in request.POST:
+            delete_form = forms.DeleteTicketForm(request.POST)
+            if delete_form.is_valid():
+                ticket.delete()
+                return redirect("home")
+    context = {
+        "edit_form": edit_form,
+        "delete_form": delete_form,
+    }
+    return render(request, "post/edit_ticket.html", context=context)
+
+
+@login_required
+def view_ticket(request, ticket_id):
+    ticket = get_object_or_404(models.Ticket, id=ticket_id)
+    return render(request, "post/view_ticket.html", {"ticket": ticket})
+
+
+@login_required
 def create_review(request):
     form = forms.ReviewForm()
     if request.method == "POST":
@@ -49,9 +80,9 @@ def create_review(request):
 
 
 @login_required
-def view_ticket(request, ticket_id):
-    ticket = get_object_or_404(models.Ticket, id=ticket_id)
-    return render(request, "post/view_ticket.html", {"ticket": ticket})
+def view_review(request, review_id):
+    review = get_object_or_404(models.Ticket, id=review_id)
+    return render(request, "post/view_review.html", {"review": review})
 
 
 @login_required

@@ -4,5 +4,6 @@
     <img src="{{ ticket.image.image.url}}" alt="">
     <p>{{ ticket.description}} </p>
     <p> {{ ticket.time_created}}</p>
+    <p><a href="{% url 'edit_ticket' ticket.id %}">Modifier le ticket</a></p>
 {% endblock content %}
 
