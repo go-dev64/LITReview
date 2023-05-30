@@ -25,8 +25,8 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model = models.Review
         fields = [
-            "rating",
             "headline",
+            "rating",
             "body",
         ]
 
@@ -38,4 +38,6 @@ class DeleteReview(forms.Form):
 class PhotoForm(forms.ModelForm):
     class Meta:
         model = models.Photo
-        fields = ["image", "caption"]
+        fields = [
+            "image",
+        ]

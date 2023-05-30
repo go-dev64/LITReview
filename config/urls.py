@@ -76,6 +76,9 @@ urlpatterns = [
         "post/<int:ticket_id>/edit", post_views.edit_ticket, name="edit_ticket"
     ),
     path("post/<int:ticket_id>", post_views.view_ticket, name="view_ticket"),
+    path(
+        "post/create-critique/", post_views.create_review, name="create_review"
+    ),
     path("accounts/", include("allauth.urls")),
 ]
 

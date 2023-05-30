@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row align-items-center b">
+            <div class="text-center">
+                <h2>Créer une critique</h2>
+                <form method="post" enctype="multipart/form-data">
+                    {{ ticket_form.as_p }}
+                    {{ photo_form.as_p}}
+                    {{ review_form.as_p}}
+                    {% csrf_token %}
+                    <a class="btn btn-secondary" href="{% url 'home' %}" role="button">Annuler</a>
+                    <button class="btn btn-primary" type="submit" >Envoyer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

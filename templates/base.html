@@ -58,13 +58,14 @@
             {% endif %}
             <p><a href="{% url 'upload_profile_photo' %}">Changer la photo de profil</a></p>
             <p><a href="#{% url 'password_change' %}">Changer le mot de passe</a></p>
+            <p><a href="{% url 'create_review' %}">Créer une critique</a></p>
+            <p><a href="{% url 'create_ticket' %}">Créer un ticket</a></p>
             <p><a href="{% url 'home' %}">Accueil</a></p>
           {% endif %}
         </div>
         <div class="main">
           {% block content %}{% endblock content %}
         </div>
-
       </div>
     </main>
     <footer></footer>
