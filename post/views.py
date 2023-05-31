@@ -75,7 +75,7 @@ def view_ticket(request, ticket_id):
 
 
 @login_required
-def create_review(request, ticket_id=None):
+def create_review(request):
     ticket_form = forms.TicketForm()
     photo_form = forms.PhotoForm()
     review_form = forms.ReviewForm()
@@ -102,12 +102,33 @@ def create_review(request, ticket_id=None):
             review.user = request.user
             review.save()
             return redirect("home")
+
     context = {
         "ticket_form": ticket_form,
         "photo_form": photo_form,
         "review_form": review_form,
     }
     return render(request, "post/create_review.html", context=context)
+
+
+@login_required
+def review_ticket(request, ticket_id):
+    ticket = get_object_or_404(models.Ticket, id=ticket_id)
+    review_form = forms.ReviewForm()
+    if request.method == "POST":
+        review_form = forms.ReviewForm(request.POST)
+        if review_form.is_valid():
+            review = review_form.save(commit=False)
+            review.ticket = ticket
+            review.user = request.user
+            review.save()
+            return redirect("home")
+
+    context = {
+        "ticket": ticket,
+        "review_form": review_form,
+    }
+    return render(request, "post/review_ticket.html", context=context)
 
 
 @login_required

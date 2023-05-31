@@ -70,14 +70,25 @@ urlpatterns = [
     path("home/", post_views.home, name="home"),
     path("photo/upload/", post_views.photo_uploader, name="photo_upload"),
     path(
-        "post/create-ticket/", post_views.create_ticket, name="create_ticket"
+        "post/ticket/create/", post_views.create_ticket, name="create_ticket"
     ),
     path(
-        "post/<int:ticket_id>/edit", post_views.edit_ticket, name="edit_ticket"
+        "post/ticket/<int:ticket_id>/edit",
+        post_views.edit_ticket,
+        name="edit_ticket",
     ),
-    path("post/<int:ticket_id>", post_views.view_ticket, name="view_ticket"),
     path(
-        "post/create-critique/", post_views.create_review, name="create_review"
+        "post/ticket/<int:ticket_id>",
+        post_views.view_ticket,
+        name="view_ticket",
+    ),
+    path(
+        "post/ticket/<int:ticket_id>/review",
+        post_views.review_ticket,
+        name="review_ticket",
+    ),
+    path(
+        "post/review/create/", post_views.create_review, name="create_review"
     ),
     path("accounts/", include("allauth.urls")),
 ]

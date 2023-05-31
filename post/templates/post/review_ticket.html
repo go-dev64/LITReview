@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="card-header text-start">
+                <p class="col-md-4 text-start">Vous avez demandé une critique</p>
+                <p class="col-md-4 text-end text-muted">publier le {{ticket.time_created}}</p>
+            </div>
+        
+        <div class="col-md-4">
+            <img src="{{ticket.image.image.url}}" class="card-img-left rounded-start" style = "max-width: 350px" alt="...">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+            <h5 class="card-title">{{ticket.title}}</h5>
+            <p class="card-text">{{ticket.description}}</p>
+            <p class="card-text"><small class="text-muted"> publier le {{ticket.time_created}} </small></p>
+            <a href="{% url 'view_ticket' ticket.id %}" class="stretched-link"></a>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row align-items-center b">
+            <div class="text-center">
+                <form method="post" enctype="multipart/form-data">
+                    <h2>critique de {{ticket.title}} </h2>
+                    {{ review_form.as_p}}
+                    {% csrf_token %}
+                    <a class="btn btn-secondary" href="{% url 'home' %}" role="button">Annuler</a>
+                    <button class="btn btn-primary" type="submit" >Envoyer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

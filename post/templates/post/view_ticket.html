@@ -1,9 +1,26 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h2>{{ticket.title}}</h2>
-    <img src="{{ ticket.image.image.url}}" alt="">
-    <p>{{ ticket.description}} </p>
-    <p> {{ ticket.time_created}}</p>
-    <p><a href="{% url 'edit_ticket' ticket.id %}">Modifier le ticket</a></p>
+<div class="card mb-3">
+    <div class="row g-0">
+        <div class="card-header text-start">
+            <p class="col-md-4 text-start">Vous avez demandé une critique</p>
+            <p class="col-md-4 text-end text-muted">publier le {{ticket.time_created}}</p>
+        </div>
+    
+      <div class="col-md-4">
+        <img src="{{ticket.image.image.url}}" class="card-img-left rounded-start" style = "max-width: 350px" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">{{ticket.title}}</h5>
+          <p class="card-text">{{ticket.description}}</p>
+          <p class="card-text"><small class="text-muted"> publier le {{ticket.time_created}} </small></p>
+          
+        </div>
+      </div>
+    </div>
+</div>
+<p><a href="{% url 'edit_ticket' ticket.id %}">Modifier le ticket</a></p>
+<p><a href="{% url 'review_ticket' ticket.id %}">Créer une critique</a></p>
 {% endblock content %}
 
