@@ -133,7 +133,7 @@ def review_ticket(request, ticket_id):
 
 @login_required
 def view_review(request, review_id):
-    review = get_object_or_404(models.Ticket, id=review_id)
+    review = get_object_or_404(models.Review, id=review_id)
     return render(request, "post/view_review.html", {"review": review})
 
 

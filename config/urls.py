@@ -90,6 +90,11 @@ urlpatterns = [
     path(
         "post/review/create/", post_views.create_review, name="create_review"
     ),
+    path(
+        "post/review/<int:review_id>/",
+        post_views.view_review,
+        name="view_review",
+    ),
     path("accounts/", include("allauth.urls")),
 ]
 
