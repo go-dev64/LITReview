@@ -63,7 +63,7 @@ urlpatterns = [
         name="password_change_done",
     ),
     path(
-        "profile_photo",
+        "profile_photo/",
         auth_views.upload_profile_photo,
         name="upload_profile_photo",
     ),
@@ -73,17 +73,17 @@ urlpatterns = [
         "post/ticket/create/", post_views.create_ticket, name="create_ticket"
     ),
     path(
-        "post/ticket/<int:ticket_id>/edit",
+        "post/ticket/<int:ticket_id>/edit/",
         post_views.edit_ticket,
         name="edit_ticket",
     ),
     path(
-        "post/ticket/<int:ticket_id>",
+        "post/ticket/<int:ticket_id>/",
         post_views.view_ticket,
         name="view_ticket",
     ),
     path(
-        "post/ticket/<int:ticket_id>/review",
+        "post/ticket/<int:ticket_id>/review/",
         post_views.review_ticket,
         name="review_ticket",
     ),
@@ -94,6 +94,11 @@ urlpatterns = [
         "post/review/<int:review_id>/",
         post_views.view_review,
         name="view_review",
+    ),
+    path(
+        "post/review/<int:review_id>/edit",
+        post_views.edit_review,
+        name="edit_review",
     ),
     path("accounts/", include("allauth.urls")),
 ]
