@@ -82,7 +82,7 @@ def create_review(request, ticket_id=None):
     if request.method == "POST":
         ticket_form = forms.TicketForm(request.POST)
         photo_form = forms.PhotoForm(request.POST, request.FILES)
-        review_form = forms.TicketForm(request.POST)
+        review_form = forms.ReviewForm(request.POST)
         if all(
             [
                 ticket_form.is_valid(),
