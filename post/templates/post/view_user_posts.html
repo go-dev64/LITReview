@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Vos publications</h2>
+    <div class="grid-container">
+        {% for post in posts %}
+            {% if post.content_type == "TICKET" %}
+
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="card-header text-start">
+                            <p class="col-md-4 text-start">Vous avez demandé une critique</p>
+                            <p class="col-md-4 text-end text-muted">publier le {{post.time_created}}</p>
+                        </div>
+                    
+                    <div class="col-md-4">
+                        <img src="{{post.image.image.url}}" class="card-img-left rounded-start" style = "max-width: 350px" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                        <h5 class="card-title">{{post.title}}</h5>
+                        <p class="card-text">{{post.description}}</p>
+                        <p class="card-text"><small class="text-muted"> publier le {{post.time_created}} </small></p>
+                        <a href="{% url 'view_ticket' post.id %}" class="stretched-link"></a>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            {% elif post.content_type == "REVIEW" %}
+                <div class="card mb-3">
+                    <div class="card-header text-start">
+                        <p class="col-md-4 text-start">Vous avez publier une critique</p>
+                        <p class="col-md-4 text-end text-muted">publier le {{post.time_created}}</p>
+                    </div>
+                    <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{{review.ticket.image.image.url}}" class="card-img-left rounded-start" style = "max-width: 350px" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                        <h5 class="card-title">{{review.headline}}</h5>
+                        <h4>{{post.ticket.title}} </h4>
+                        <p class="card-text">{{post.body}}</p>
+                        <a href="{% url 'view_review' post.id %}" class="stretched-link"></a>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock content %}

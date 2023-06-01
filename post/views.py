@@ -1,6 +1,9 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import CharField, Value
 from django.shortcuts import get_object_or_404, redirect, render
-from requests import get
+
+
+from itertools import chain
 
 from post import models
 
@@ -176,3 +179,23 @@ def photo_uploader(request):
             photo.save()
             return redirect("home")
     return render(request, "post/photo_upload.html", context={"form": form})
+
+
+def view_user_posts(request):
+    reviews = models.Review.objects.filter(user=request.user)
+    # returns queryset of reviews
+    reviews = reviews.annotate(content_type=Value("REVIEW", CharField()))
+
+    tickets = models.Ticket.objects.filter(user=request.user)
+    # returns queryset of tickets
+    tickets = tickets.annotate(content_type=Value("TICKET", CharField()))
+
+    # combine and sort the two types of posts
+    posts = sorted(
+        chain(reviews, tickets),
+        key=lambda post: post.time_created,
+        reverse=True,
+    )
+    return render(
+        request, "post/view_user_posts.html", context={"posts": posts}
+    )

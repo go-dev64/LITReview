@@ -100,6 +100,11 @@ urlpatterns = [
         post_views.edit_review,
         name="edit_review",
     ),
+    path(
+        "post/view_user_posts/",
+        post_views.view_user_posts,
+        name="view_user_posts",
+    ),
     path("accounts/", include("allauth.urls")),
 ]
 
