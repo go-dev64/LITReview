@@ -21,8 +21,8 @@
     </div>
 </div>
 <p><a href="{% url 'edit_ticket' ticket.id %}">Modifier le ticket</a></p>
-<p><a href="{% url 'review_ticket' ticket.id %}">Créer une critique</a></p>
-
-<p> review === {{ticket.review.headline}} </p>
+{% if not ticket.review %}
+  <p><a href="{% url 'review_ticket' ticket.id %}">Créer une critique</a></p>
+{% endif %}
 {% endblock content %}
 
