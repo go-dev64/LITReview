@@ -21,6 +21,7 @@ def add_followed_user(request):
         form = FollowUsersForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
+
             return redirect("home")
     return render(
         request, "follower/add_followed_user.html", context={"form": form}
