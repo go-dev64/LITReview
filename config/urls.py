@@ -17,103 +17,14 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.contrib.auth.views import (
-    PasswordChangeDoneView,
-)
-from django.shortcuts import redirect
 from django.urls import path, include
-from allauth.account import views as account_views
-from authentication import views as auth_views
-from post import views as post_views
-from follower import views as follow_views
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path(
-        "",
-        account_views.LoginView.as_view(
-            template_name="authentication/login.html",
-        ),
-        name="login",
-    ),
-    path(
-        "accounts/signup/",
-        account_views.SignupView.as_view(
-            template_name="authentication/signup.html",
-        ),
-    ),
-    path(
-        "accounts/logout/",
-        account_views.LogoutView.as_view(
-            template_name="authentication/logout.html"
-        ),
-        name="account_logout",
-    ),
-    path(
-        "accounts/password/change/",
-        account_views.PasswordChangeView.as_view(
-            template_name="authentication/change_password.html"
-        ),
-        name="password_change",
-    ),
-    path(
-        "change-password-done/",
-        PasswordChangeDoneView.as_view(
-            template_name="authentication/change_password_done.html"
-        ),
-        name="password_change_done",
-    ),
-    path(
-        "profile_photo/",
-        auth_views.upload_profile_photo,
-        name="upload_profile_photo",
-    ),
-    path("home/", post_views.home, name="home"),
-    path("photo/upload/", post_views.photo_uploader, name="photo_upload"),
-    path(
-        "post/ticket/create/", post_views.create_ticket, name="create_ticket"
-    ),
-    path(
-        "post/ticket/<int:ticket_id>/edit/",
-        post_views.edit_ticket,
-        name="edit_ticket",
-    ),
-    path(
-        "post/ticket/<int:ticket_id>/",
-        post_views.view_ticket,
-        name="view_ticket",
-    ),
-    path(
-        "post/ticket/<int:ticket_id>/review/",
-        post_views.review_ticket,
-        name="review_ticket",
-    ),
-    path(
-        "post/review/create/", post_views.create_review, name="create_review"
-    ),
-    path(
-        "post/review/<int:review_id>/",
-        post_views.view_review,
-        name="view_review",
-    ),
-    path(
-        "post/review/<int:review_id>/edit",
-        post_views.edit_review,
-        name="edit_review",
-    ),
-    path(
-        "post/view_user_posts/",
-        post_views.view_user_posts,
-        name="view_user_posts",
-    ),
-    path(
-        "follower/follower-users/",
-        follow_views.add_followed_user,
-        name="add_followed_user",
-    ),
-    path(
-        "follower/follow_view/", follow_views.follow_view, name="follow_view"
-    ),
+    path("", include("authentication.urls")),
+    path("follower/", include("follower.urls")),
+    path("post/", include("post.urls")),
     path("accounts/", include("allauth.urls")),
 ]
 

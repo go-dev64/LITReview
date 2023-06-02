@@ -27,7 +27,6 @@ def add_followed_user(request):
                 user_to_follow = User.objects.get(username=form)
             except:
                 message = f"Utilisateur inconnue"
-                add_followed_user
             else:
                 request.user.following.add(user_to_follow)
                 return redirect("home")
