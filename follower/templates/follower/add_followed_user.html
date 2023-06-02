@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Suivre des utilisateurs</h2>
+    <form method="post">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <a class="btn btn-secondary" href="{% url 'home' %}" role="button">Annuler</a>
+        <button class="btn btn-primary" type="submit" >Confirmer</button>
+    </form>
+{% endblock content %}

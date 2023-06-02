@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>Suivre des utilisateurs</h3>
+
+
+
+<h3>Utilisateurs suivi</h3>
+    {% for user in users %}
+    <p>{{user.username}} </p>
+
+    {% endfor %}
+<h3>Vos followers</h3>
+    {% for follower in followers %}
+    <p> {{follower.username}}</p>
+
+    {% endfor %}
+{% endblock content %}
+

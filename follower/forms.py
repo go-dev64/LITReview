@@ -1,0 +1,11 @@
+from django import forms
+from . import models
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
+
+class FollowUsersForm(forms.ModelForm):
+    class Meta:
+        model = models.UserFollows
+        fields = ["user"]

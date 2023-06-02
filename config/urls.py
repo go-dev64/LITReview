@@ -25,6 +25,7 @@ from django.urls import path, include
 from allauth.account import views as account_views
 from authentication import views as auth_views
 from post import views as post_views
+from follower import views as follow_views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -104,6 +105,11 @@ urlpatterns = [
         "post/view_user_posts/",
         post_views.view_user_posts,
         name="view_user_posts",
+    ),
+    path(
+        "follower/follower-users/",
+        follow_views.add_followed_user,
+        name="add_followed_user",
     ),
     path("accounts/", include("allauth.urls")),
 ]

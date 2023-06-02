@@ -1,5 +1,4 @@
 from django import forms
-from requests import delete
 
 from . import models
 
