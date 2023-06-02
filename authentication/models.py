@@ -7,3 +7,9 @@ class User(AbstractUser):
     SUBSCRIBER = "SUBSCRIBER"
 
     profil_photo = models.ImageField(verbose_name="Photo de profil")
+    following = models.ManyToManyField(
+        "self",
+        through=UserFollows,
+        symmetrical=False,
+        related_name="followers",
+    )
