@@ -111,6 +111,9 @@ urlpatterns = [
         follow_views.add_followed_user,
         name="add_followed_user",
     ),
+    path(
+        "follower/follow_view/", follow_views.follow_view, name="follow_view"
+    ),
     path("accounts/", include("allauth.urls")),
 ]
 

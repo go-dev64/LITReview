@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
-class FollowUsersForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ["following"]
+class FollowUsersForm(forms.Form):
+    user_to_follow = forms.CharField(
+        max_length=63, label="Nom de l'utilisateur à suivre"
+    )
