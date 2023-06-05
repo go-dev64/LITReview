@@ -1,0 +1,20 @@
+{% load post_extra %}
+<div class="card text-dark bg-light mb-3" style=style="max-width: 540px;">
+    <div class="row g-0 p-1 border-bottom">
+        <p class="col-md-6 text-start">{%get_poster_display ticket.user%} publié un ticket</p>
+        <p class="col-md-6 text-end text-muted">{{ ticket.time_created|get_posted_at_display}} </p>
+    </div>
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="{{ticket.image.image.url}}" class="card-img-left rounded-start" style = "max-width: 350px" alt="...">
+        </div>
+        <div class="col-md-8 text-center w-80" >
+            <div class="card-body">
+                <h5 class="card-title">{{ticket.title}}</h5>
+                <p class="card-text">{{ticket.description}}</p>
+                <p class="card-text"><small class="text-muted"> publier le {{ticket.time_created}} </small></p>
+                <a href="{% url 'view_ticket' ticket.id %}" class="stretched-link"></a>
+            </div>
+        </div>
+    </div>    
+</div>
