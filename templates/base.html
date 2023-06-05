@@ -35,7 +35,7 @@
                     <a class="nav-link" href="{% url 'view_user_posts'%}">Post</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{% url 'add_followed_user' %}">Abonnements</a>
+                    <a class="nav-link" href="{% url 'follower_view' %}">Abonnements</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'account_logout' %}">Se deconnecter</a>
@@ -61,7 +61,7 @@
             <p><a href="{% url 'create_review' %}">Créer une critique</a></p>
             <p><a href="{% url 'create_ticket' %}">Créer un ticket</a></p>
             <p><a href="{% url 'home' %}">Accueil</a></p>
-            <p><a href="{% url 'follow_view' %}">Accueil</a></p>
+            <p><a href="{% url 'follower_view' %}">Accueil</a></p>
           {% endif %}
         </div>
         <div class="main">

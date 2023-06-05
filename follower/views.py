@@ -5,18 +5,19 @@ from authentication.models import User
 from follower.forms import FollowUsersForm
 
 
-@login_required
-def user_followed_by_user(request):
-    pass
+def user_followed_by_user_and_followers(request):
+    user = request.user
+    user_followed_by_user = user.following.all()
+    followers = user.followers.all()
+
+    return user_followed_by_user, followers
 
 
 @login_required
-def followers_of_user(request):
-    pass
-
-
-@login_required
-def add_followed_user(request):
+def follower_views(request):
+    user_followed_by_user, followers = user_followed_by_user_and_followers(
+        request=request
+    )
     form = FollowUsersForm()
     message = ""
     if request.method == "POST":
@@ -33,16 +34,11 @@ def add_followed_user(request):
 
     return render(
         request,
-        "follower/add_followed_user.html",
-        context={"form": form, "message": message},
-    )
-
-
-def follow_view(request):
-    user = request.user
-    personne_suivi_par_user = user.following.all()
-    return render(
-        request,
-        "follower/follow_view.html",
-        context={"personne_suivi_par_user": personne_suivi_par_user},
+        "follower/follower_view.html",
+        context={
+            "form": form,
+            "message": message,
+            "user_followed_by_user": user_followed_by_user,
+            "followers": followers,
+        },
     )
