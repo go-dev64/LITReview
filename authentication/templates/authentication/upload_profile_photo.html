@@ -6,4 +6,11 @@
         {% csrf_token %}
         <button type="submit">Changer la photo de profil</button>
     </form>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{message.tags}}">{{message}} </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 {% endblock content %}

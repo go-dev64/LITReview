@@ -6,6 +6,8 @@ User = get_user_model()
 
 
 class FollowUsersForm(forms.Form):
-    user_to_follow = forms.CharField(
-        max_length=63, label="Nom de l'utilisateur à suivre"
-    )
+    user_to_follow = forms.CharField(max_length=63, label="Nom de l'utilisateur à suivre")
+
+
+class DeleteFollowUserForm(forms.Form):
+    delete_ticket = forms.BooleanField(widget=forms.HiddenInput, initial=True)

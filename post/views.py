@@ -12,14 +12,12 @@ from . import forms
 
 @login_required
 def home(request):
-    reviews = models.Review.objects.filter(
-        Q(user=request.user) | Q(user__in=request.user.following.all())
-    )
+    reviews = models.Review.objects.filter(Q(user=request.user) | Q(user__in=request.user.following.all()))
     reviews = reviews.annotate(content_type=Value("REVIEW", CharField()))
 
-    tickets = models.Ticket.objects.filter(
-        Q(user=request.user) | Q(user__in=request.user.following.all())
-    ).exclude(review__in=reviews)
+    tickets = models.Ticket.objects.filter(Q(user=request.user) | Q(user__in=request.user.following.all())).exclude(
+        review__in=reviews
+    )
     tickets = tickets.annotate(content_type=Value("TICKET", CharField()))
 
     posts = sorted(
@@ -181,22 +179,6 @@ def edit_review(request, review_id):
     return render(request, "post/edit_review.html", context=context)
 
 
-"""
-@login_required
-def photo_uploader(request):
-    form = forms.PhotoForm()
-    if request.method == "POST":
-        form = forms.PhotoForm(request.POST, request.FILES)
-        if form.is_valid():
-            photo = form.save(commit=False)
-            # set the uploader to the user before saving the model
-            photo.uploader = request.user
-            # now we can save
-            photo.save()
-            return redirect("home")
-    return render(request, "post/photo_upload.html", context={"form": form})"""
-
-
 def view_user_posts(request):
     reviews = models.Review.objects.filter(user=request.user)
     # returns queryset of reviews
@@ -212,6 +194,4 @@ def view_user_posts(request):
         key=lambda post: post.time_created,
         reverse=True,
     )
-    return render(
-        request, "post/view_user_posts.html", context={"posts": posts}
-    )
+    return render(request, "post/view_user_posts.html", context={"posts": posts})

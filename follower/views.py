@@ -1,8 +1,10 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from authentication.models import User
 
-from follower.forms import FollowUsersForm
+from follower.forms import FollowUsersForm, DeleteFollowUserForm
+from . import forms
+from . import models
 
 
 def user_followed_by_user_and_followers(request):
@@ -15,9 +17,7 @@ def user_followed_by_user_and_followers(request):
 
 @login_required
 def follower_views(request):
-    user_followed_by_user, followers = user_followed_by_user_and_followers(
-        request=request
-    )
+    user_followed_by_user, followers = user_followed_by_user_and_followers(request=request)
     form = FollowUsersForm()
     message = ""
     if request.method == "POST":
@@ -42,3 +42,13 @@ def follower_views(request):
             "followers": followers,
         },
     )
+
+
+def delete_followed(request, user_id):
+    user_follow = get_object_or_404(models.User, id=user_id)
+    delete_form = DeleteFollowUserForm()
+    if "delete_review" in request.POST:
+        delete_form = DeleteFollowUserForm(request.POST)
+        if delete_form.is_valid():
+            user_follow.delete()
+            return redirect("home")
