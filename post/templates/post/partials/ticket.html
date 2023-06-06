@@ -1,19 +1,8 @@
 {% load static %}
 {% load post_extra %}
-
-<div class="card text-dark bg-light mb-3" style=style="max-width: 540px;">
-    <div class="d-flex bd-highlight border-bottom align-items-center"  style="height: 60px;">
-        <div class="div-img center-center rounded-circle overflow-hidden m-2" style="width : 45px; height : 45px;">
-            {% if ticket.user.profil_photo.url %}
-            <img class="w-100 h-auto" src={{ ticket.user.profil_photo.url }} style="">
-            {% else %}
-            <img class="w-100 h-auto" src="{% static 'images/default_profile.png'%}" style="">
-            {% endif %}
-        </div>
-        <p class="my-0 p-2 bd-highlight">{%get_poster_display ticket.user%} demandé une critique</p>
-        <p class="my-0 ms-auto p-2 bd-highlight"><small class="text-muted">{{ ticket.time_created|get_posted_at_display}}</small> </p>
-    </div>
-    <div class="row g-0 align-items-center">
+<div class="card text-dark bg-light mb-3">
+    {% include "post/partials/header_card.html" with element=ticket %}
+    <div class="row g-0 align-items-center border-bottom">
         <div class="col-md-5 m-1 p-1">
             <img src="{{ticket.image.image.url}}" class="card-img-left rounded-start" style ="max-width: 350px" alt="...">
         </div>
@@ -24,16 +13,16 @@
             </div>
         </div>
     </div>
-    {% if user == ticket.user %}
-    <div class="d-flex bd-highlight border-top align-items-center">
-        <p class="my-0 p-2 bd-highlight">
-            <a href="{% url 'edit_ticket' ticket.id %}" class="btn btn-secondary m-2 ">Modifier</a>
-        </p>
-    {% endif %}
-    {% if not ticket.review %}
-        <p class="my-0 ms-auto p-2 bd-highlight">
-            <a href="{% url 'review_ticket' ticket.id %}" class="btn btn-secondary m-2 ">Créer la critique</a>
-        </p>
-    </div>  
-    {% endif %}
+        <div class="d-flex bd-highlight">
+            {% if user == ticket.user%}
+                <p class="my-0 p-2 bd-highlight">
+                    <a href="{% url 'edit_ticket' ticket.id %}" class="btn btn-secondary m-2 ">Modifier</a>
+                </p>
+            {% endif %}
+            {% if not ticket.review %}
+                <p class="my-0 ms-auto p-2 bd-highlight">
+                    <a href="{% url 'review_ticket' ticket.id %}" class="btn btn-secondary m-2 ">Créer la critique</a>
+                </p>
+            {% endif %}
+        </div>
 </div>
