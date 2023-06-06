@@ -28,3 +28,8 @@ def get_poster_display(context, user):
     if user == context["user"]:
         return "Vous avez"
     return f"{user.username} a"
+
+
+@register.filter(name="times")
+def times(number):
+    return range(number)

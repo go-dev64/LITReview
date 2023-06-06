@@ -1,0 +1,42 @@
+{% load static %}
+{% load post_extra %}
+<div class="card text-dark bg-green mb-3">
+    <div class="d-flex bd-highlight border-bottom align-items-center"  style="height: 60px;">
+        <div class="div-img center-center rounded-circle overflow-hidden m-2" style="width : 45px; height : 45px;">
+            {% if ticket.user.profil_photo.url %}
+            <img class="w-100 h-auto" src={{ review.user.profil_photo.url }} style="">
+            {% else %}
+            <img class="w-100 h-auto" src="{% static 'images/default_profile.png'%}" style="">
+            {% endif %}
+        </div>
+        <p class="my-0 p-2 bd-highlight">{%get_poster_display review.user%} publié une critique</p>
+        <p class="my-0 ms-auto p-2 bd-highlight"><small class="text-muted">{{ review.time_created|get_posted_at_display}}</small> </p>
+    </div>
+    <div class="row m-1">
+        <div class="col-12 ">
+            <div class="btn-toolbar align-items-center" role="toolbar" aria-label="Toolbar with button groups">
+                <h5 class="m-1">{{review.headline}} - </h5>
+                <div class="btn-group mx-2" role="group" aria-label="First group">
+                    {% for i in review.rating|times %}
+                        <li type="button" class="btn btn-warning">&#9733;</li>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row m-1">
+        <div class="col">
+            <p>{{review.body}} </p>
+        </div>
+    </div>
+    <div class="container">
+        {% include "post/partials/ticket.html" with ticket=review.ticket %}
+    </div>
+    {% if user == ticket.user %}
+        <div class="d-flex bd-highlight border-top align-items-center">
+            <p class="my-0 p-2 bd-highlight">
+                <a href="{% url 'edit_ticket' ticket.id %}" class="btn btn-secondary m-2 ">Modifier</a>
+            </p>
+        </div>
+    {% endif %}
+</div>
