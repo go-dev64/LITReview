@@ -10,4 +10,4 @@ class FollowUsersForm(forms.Form):
 
 
 class DeleteFollowUserForm(forms.Form):
-    delete_ticket = forms.BooleanField(widget=forms.HiddenInput, initial=True)
+    delete_followed_user = forms.BooleanField(widget=forms.HiddenInput, initial=True)

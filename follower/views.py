@@ -16,7 +16,7 @@ def user_followed_by_user_and_followers(request):
 
 
 @login_required
-def follower_views(request):
+def follower_page(request):
     user_followed_by_user, followers = user_followed_by_user_and_followers(request=request)
     form = FollowUsersForm()
     message = ""
@@ -34,7 +34,7 @@ def follower_views(request):
 
     return render(
         request,
-        "follower/follower_view.html",
+        "follower/follower_page.html",
         context={
             "form": form,
             "message": message,
@@ -44,11 +44,13 @@ def follower_views(request):
     )
 
 
-def delete_followed(request, user_id):
-    user_follow = get_object_or_404(models.User, id=user_id)
+def delete_user_follow(request, user_follow_id):
+    user = request.user
+    user_follow = get_object_or_404(models.UserFollows, followed_user=user_follow_id)
     delete_form = DeleteFollowUserForm()
-    if "delete_review" in request.POST:
+    if "delete_followed_user" in request.POST:
         delete_form = DeleteFollowUserForm(request.POST)
         if delete_form.is_valid():
-            user_follow.delete()
-            return redirect("home")
+            user.following.remove(user_follow.followed_user)
+            return redirect("follower_page")
+    return render(request, "follower/delete_user_follow.html", {"delete_form": delete_form})

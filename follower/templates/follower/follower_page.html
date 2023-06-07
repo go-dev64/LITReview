@@ -8,15 +8,18 @@
                 <form method="post">
                     {{ form }}
                     {% csrf_token %}
-                    <button class="m-5 btn btn-primary" type="submit" >Confirmer</button>
+                    <button class="m-5 btn btn-primary" type="submit">Confirmer</button>
                 </form>
             </div>
         </div>
         <h3 class="my-3 text-center">Les utilisateurs que vous suivez</h3>
         <div class="row">
             <ul class="list-group">
-                {% for user in user_followed_by_user%}
-                    <li class="list-group-item d-flex justify-content-between align-items-center">{{user.username}}<a class="btn btn-danger" href="{% url 'home' %}" role="button">Supprimer</a></li>
+                {% for user_follow in user_followed_by_user%}
+                    <li class="list-group-item d-flex justify-content-between align-items-center border">
+                        {{user_follow.username}}
+                        <a class="btn btn-danger" href="{% url 'delete_user_follow' user_follow.id %}" role="button">Supprimer</a>
+                    </li>
                 {% endfor %}
             </ul>
         </div>

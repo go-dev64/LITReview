@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h3>Etes-vous sur de ne plus suivre {{user.followed_user}} ?</h3>
+    <form method="post">
+        {{ delete_form }}
+        {% csrf_token %}
+        <a class="btn btn-secondary" href="{% url 'follower_page' %}" role="button">Annuler</a>
+        <button type="submit" class="btn btn-primary m-2"  >Supprimer</button>
+    </form>
+{% endblock content %}
