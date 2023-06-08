@@ -11,6 +11,16 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from django.contrib.messages import constants as messages
+
+# Connecting Bootstrap alerts to Django message tags
+MESSAGE_TAGS = {
+    messages.DEBUG: "alert-secondary",
+    messages.INFO: "alert-info",
+    messages.SUCCESS: "alert-success",
+    messages.WARNING: "alert-warning",
+    messages.ERROR: "alert-danger",
+}
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,9 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = (
-    "django-insecure-u!%)!kbaenbwopmyn31z89+g7ff(&-)d9i2a#z9)_o9twd7#z$"
-)
+SECRET_KEY = "django-insecure-u!%)!kbaenbwopmyn31z89+g7ff(&-)d9i2a#z9)_o9twd7#z$"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

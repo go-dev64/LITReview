@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from authentication.models import User
@@ -18,26 +19,25 @@ def user_followed_by_user_and_followers(request):
 @login_required
 def follower_page(request):
     user_followed_by_user, followers = user_followed_by_user_and_followers(request=request)
-    form = FollowUsersForm()
-    message = ""
     if request.method == "POST":
         form = FollowUsersForm(request.POST)
         if form.is_valid():
             form = form.cleaned_data["user_to_follow"]
-            try:
-                user_to_follow = User.objects.get(username=form)
-            except:
-                message = f"Utilisateur inconnue"
-            else:
-                request.user.following.add(user_to_follow)
-                return redirect("home")
-
+        try:
+            user_to_follow = get_object_or_404(User, username=form)
+        except:
+            messages.error(request, f"Utilisateur inconnue. Merci de renseigner un utilisateur connue!")
+            return redirect("follower_page")
+        else:
+            request.user.following.add(user_to_follow)
+            messages.success(request, f"{user_to_follow} a été ajouté avec succes aux utilisateurs que vous suivez.")
+            return redirect("follower_page")
+    form = FollowUsersForm()
     return render(
         request,
         "follower/follower_page.html",
         context={
             "form": form,
-            "message": message,
             "user_followed_by_user": user_followed_by_user,
             "followers": followers,
         },
@@ -45,12 +45,18 @@ def follower_page(request):
 
 
 def delete_user_follow(request, user_follow_id):
-    user = request.user
-    user_follow = get_object_or_404(models.UserFollows, followed_user=user_follow_id)
+    user_follow = get_object_or_404(User, id=user_follow_id)
     delete_form = DeleteFollowUserForm()
-    if "delete_followed_user" in request.POST:
-        delete_form = DeleteFollowUserForm(request.POST)
-        if delete_form.is_valid():
-            user.following.remove(user_follow.followed_user)
-            return redirect("follower_page")
-    return render(request, "follower/delete_user_follow.html", {"delete_form": delete_form})
+    if request.method == "POST":
+        if "delete_followed_user" in request.POST:
+            delete_form = DeleteFollowUserForm(request.POST)
+            if delete_form.is_valid():
+                request.user.following.remove(user_follow)
+                return redirect("follower_page")
+    else:
+        delete_form = DeleteFollowUserForm()
+    return render(
+        request,
+        "follower/delete_user_follow.html",
+        {"delete_form": delete_form, "user_follow": user_follow},
+    )
