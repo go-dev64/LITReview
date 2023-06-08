@@ -37,6 +37,18 @@
           Publier une demande de critique
         </a>
       </li>
+      <li>
+        <a href="{% url 'profile_view'%}" class="nav-link text-white">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
+          Votre Profil
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'account_logout' %}" class="nav-link text-white">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
+          Se déconnecter
+        </a>
+      </li>
     </ul>
     <hr>
     <div class="dropdown">
@@ -55,4 +67,4 @@
       </ul>
     </div>
   </div>
-  {% endif %}
+{% endif %}

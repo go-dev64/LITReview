@@ -1,13 +1,13 @@
 {% load crispy_forms_tags %}
 <div class="container border rounded-3 p-2">
     {% if title %}
-    <h4 class="text-center" >{{title}} </h4>
+        <h4 class="text-center" >{{title}} </h4>
     {% else %}
-    <h4 class="text-center" >Modification du mot de passe</h4>
+        <h4 class="text-center" >Modification du mot de passe</h4>
     {% endif %}
     <form method="post" enctype="multipart/form-data">
-    {{ form |crispy }}
-    {% csrf_token %}
-    <button class="btn btn-primary" type="submit">Valider</button>
+        {{ form |crispy }}
+        {% csrf_token %}
+        <button class="btn btn-primary" type="submit">Valider</button>
     </form>
 </div>
