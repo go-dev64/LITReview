@@ -1,0 +1,58 @@
+{% load static %}
+{% if user.is_authenticated %}
+  <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark vh-100 position-fixed" style="">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+      <span class="fs-4">LITReview</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a href="{% url 'home' %}" class="nav-link text-white" aria-current="page">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
+          Votre Flux
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'view_user_posts'%}" class="nav-link text-white">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+          Vos Posts
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'follower_page' %}" class="nav-link text-white">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
+          Abonnements
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'create_review' %}" class="nav-link text-white">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
+          Publier une critique
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'create_ticket' %}" class="nav-link text-white">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
+          Publier une demande de critique
+        </a>
+      </li>
+    </ul>
+    <hr>
+    <div class="dropdown">
+      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle show" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="true">
+        {% if user.profil_photo %}
+        <img src="{{ user.profil_photo.url }}" alt="{{user.username}}" width="32" height="32" class="rounded-circle me-2">
+        {% else %}
+        <img src="{% static 'images/default_profile.png'%}" alt="{{user.username}}" width="32" height="32" class="rounded-circle me-2">
+        {% endif %}
+        <strong>{{user.username}}</strong>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-dark text-small " aria-labelledby="dropdownUser1" data-popper-placement="top-start" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(0px, -34px);">
+        <li><a class="dropdown-item" href="{% url 'profile_view'%}">Votre profil</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="{% url 'account_logout' %}">Se déconnecter</a></li>
+      </ul>
+    </div>
+  </div>
+  {% endif %}

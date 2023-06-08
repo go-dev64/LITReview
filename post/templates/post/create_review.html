@@ -1,18 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load crispy_forms_tags %}
     <div class="container">
-        <div class="row align-items-center b">
-            <div class="text-center">
-                <form method="post" enctype="multipart/form-data">
-                    <h2>Créer une critique</h2>
-                    {{ ticket_form.as_p }}
-                    {{ photo_form.as_p}}
-                    {{ review_form.as_p}}
-                    {% csrf_token %}
-                    <a class="btn btn-secondary" href="{% url 'home' %}" role="button">Annuler</a>
-                    <button class="btn btn-primary" type="submit" >Envoyer</button>
-                </form>
-            </div>
-        </div>
+        <form method="post" enctype="multipart/form-data">
+            <h2 class="text-center">Créer une critique</h2>
+            {{ ticket_form|crispy }}
+            {{ photo_form|crispy}}
+            {{ review_form|crispy}}
+            {% csrf_token %}
+            <a class="btn btn-secondary" href="{% url 'home' %}" role="button">Annuler</a>
+            <button class="btn btn-primary" type="submit" >Envoyer</button>
+        </form>
     </div>
 {% endblock content %}

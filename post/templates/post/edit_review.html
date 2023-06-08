@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load crispy_forms_tags %}
+<div class="container">
     <h2>Modifier la critique</h2>
     <div class="card mb-3">
         <div class="row g-0">
@@ -21,10 +23,10 @@
         </div>
     </div>
     <div class="container">
-        <div class="row align-items-center b">
+        <div class="row align-items-center ">
             <div class="text-center">
                 <form method="post">
-                    {{ edit_form.as_p }}
+                    {{ edit_form|crispy }}
                     {% csrf_token %}
                     <button type="submit" >Sauvegarder</button>
                 </form>
@@ -37,5 +39,7 @@
                 </form>
             </div>
         </div>
-    </div>        
+    </div>
+
+</div>        
 {% endblock content %}
