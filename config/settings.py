@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "authentication",
+    "crispy_forms",
+    "crispy_bootstrap5",
     "follower",
     "post",
     "allauth.socialaccount.providers.google",
@@ -173,3 +175,7 @@ LOGOUT_REDIRECT_URL = LOGIN_URL
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR.joinpath("media/")
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
