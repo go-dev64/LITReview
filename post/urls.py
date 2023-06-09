@@ -10,21 +10,11 @@ urlpatterns = [
         name="edit_ticket",
     ),
     path(
-        "ticket/<int:ticket_id>/",
-        views.view_ticket,
-        name="view_ticket",
-    ),
-    path(
         "ticket/<int:ticket_id>/review/",
         views.review_ticket,
         name="review_ticket",
     ),
     path("review/create/", views.create_review, name="create_review"),
-    path(
-        "review/<int:review_id>/",
-        views.view_review,
-        name="view_review",
-    ),
     path(
         "review/<int:review_id>/edit",
         views.edit_review,

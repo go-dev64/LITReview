@@ -50,8 +50,9 @@ def create_ticket(request):
             ticket.image = photo
             ticket.save()
             return redirect("home")
+    my_forms = [ticket_form, photo_form]
 
-    context = {"ticket_form": ticket_form, "photo_form": photo_form}
+    context = {"forms": my_forms}
     return render(request, "post/create_ticket.html", context=context)
 
 
@@ -59,11 +60,15 @@ def create_ticket(request):
 def edit_ticket(request, ticket_id):
     ticket = get_object_or_404(models.Ticket, id=ticket_id)
     edit_form = forms.TicketForm(instance=ticket)
+    edit_photo = forms.PhotoForm(instance=ticket.image)
     delete_form = forms.DeleteTicketForm()
     if request.method == "POST":
         if "edit_ticket" in request.POST:
+            edit_photo = forms.PhotoForm(request.POST, instance=ticket.image)
             edit_form = forms.TicketForm(request.POST, instance=ticket)
-            if edit_form.is_valid():
+            if all([edit_form.is_valid(), edit_photo.is_valid()]):
+                edit_photo.save()
+                edit_form.image = edit_photo
                 edit_form.save()
                 return redirect("home")
 
@@ -72,23 +77,14 @@ def edit_ticket(request, ticket_id):
             if delete_form.is_valid():
                 ticket.delete()
                 return redirect("home")
+
+    my_forms = [edit_form, edit_photo]
     context = {
-        "edit_form": edit_form,
+        "ticket": ticket,
+        "forms": my_forms,
         "delete_form": delete_form,
     }
     return render(request, "post/edit_ticket.html", context=context)
-
-
-@login_required
-def view_ticket(request, ticket_id):
-    ticket = get_object_or_404(models.Ticket, id=ticket_id)
-    return render(
-        request,
-        "post/view_ticket.html",
-        {
-            "ticket": ticket,
-        },
-    )
 
 
 @login_required
@@ -120,11 +116,9 @@ def create_review(request):
             review.save()
             return redirect("home")
 
-    context = {
-        "ticket_form": ticket_form,
-        "photo_form": photo_form,
-        "review_form": review_form,
-    }
+    my_forms = [ticket_form, photo_form, review_form]
+
+    context = {"forms": my_forms}
     return render(request, "post/create_review.html", context=context)
 
 
@@ -143,15 +137,9 @@ def review_ticket(request, ticket_id):
 
     context = {
         "ticket": ticket,
-        "review_form": review_form,
+        "forms": review_form,
     }
     return render(request, "post/review_ticket.html", context=context)
-
-
-@login_required
-def view_review(request, review_id):
-    review = get_object_or_404(models.Review, id=review_id)
-    return render(request, "post/view_review.html", {"review": review})
 
 
 @login_required
@@ -171,6 +159,7 @@ def edit_review(request, review_id):
             if delete_form.is_valid():
                 review.delete()
                 return redirect("home")
+
     context = {
         "edit_form": edit_form,
         "delete_form": delete_form,
