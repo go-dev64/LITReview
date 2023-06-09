@@ -1,14 +1,17 @@
 {% extends 'base.html' %}
-{% block content %}
+
 {% load crispy_forms_tags %}
-    <div class="container">
-        <h2 class="text-center">Créer une demande de critique</h2>
-        <form method="post" enctype="multipart/form-data">
-            {{ ticket_form|crispy }}
-            {{ photo_form|crispy}}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center">Créer une demande de critique</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% for form in forms %}
             {% csrf_token %}
-            <a class="btn btn-secondary" href="{% url 'home' %}" role="button">Annuler</a>
-            <button class="btn btn-primary" type="submit" >Envoyer</button>
-        </form>
-    </div>
+            {{form|cripsy}}
+        {% endfor %}
+        <a class="btn btn-secondary" href="{% url 'home' %}" role="button">Annuler</a>
+        <button class="btn btn-secondary" type="submit">Envoyer</button>
+    </form>
+</div>
 {% endblock content %}
