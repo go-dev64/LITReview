@@ -5,11 +5,9 @@ from PIL import Image
 
 
 class Photo(models.Model):
-    image = models.ImageField(verbose_name="image")
+    image = models.ImageField(verbose_name="image", blank=True)
     caption = models.CharField(max_length=128, blank=True)
-    uploader = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
-    )
+    uploader = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
 
     IMAGE_MAX_SIZE = (600, 600)
@@ -28,12 +26,8 @@ class Ticket(models.Model):
     # Your Ticket model definition goes here
     title = models.CharField(max_length=128)
     description = models.TextField(max_length=2048, blank=True)
-    user = models.ForeignKey(
-        to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE
-    )
-    image = models.ForeignKey(
-        Photo, null=True, on_delete=models.SET_NULL, blank=True
-    )
+    user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    image = models.ForeignKey(Photo, null=True, on_delete=models.SET_NULL, blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
 
 
@@ -45,7 +39,5 @@ class Review(models.Model):
     )
     headline = models.CharField(max_length=128)
     body = models.TextField(max_length=8192, blank=True)
-    user = models.ForeignKey(
-        to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE
-    )
+    user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     time_created = models.DateTimeField(auto_now_add=True)

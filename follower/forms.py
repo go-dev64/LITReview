@@ -1,11 +1,7 @@
-from ast import Div
-from logging import PlaceHolder
-from turtle import title
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset
+from crispy_forms.layout import Layout
 from crispy_forms.bootstrap import FieldWithButtons, StrictButton
 from django import forms
-from . import models
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -14,11 +10,11 @@ User = get_user_model()
 class FollowUsersForm(forms.Form):
     user_to_follow = forms.CharField(
         max_length=63,
-        label="Entrer le nom de l'utilisateur",
+        label="Suivre un nouvel utilisateur",
         widget=forms.TextInput(
             attrs={
                 "class": "form-control",
-                "placeholder": "Nom de l'utilisateur",
+                "placeholder": "Enter le nom de l'utilisateur",
                 "aria-label": "Entrer le nom de l'utilisateur",
             }
         ),
@@ -28,13 +24,10 @@ class FollowUsersForm(forms.Form):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.layout = Layout(
-            Fieldset(
-                "Suivre un nouvel utilisateur",
-                FieldWithButtons(
-                    "user_to_follow",
-                    StrictButton("Envoyer", type="submit", css_class="btn btn-outline-secondary"),
-                    input_size="input-group-sm",
-                ),
+            FieldWithButtons(
+                "user_to_follow",
+                StrictButton("Envoyer", type="submit", css_class="btn btn-outline-secondary"),
+                input_size="input-group-sm",
             ),
         )
 

@@ -41,6 +41,7 @@ def create_ticket(request):
     if request.method == "POST":
         ticket_form = forms.TicketForm(request.POST)
         photo_form = forms.PhotoForm(request.POST, request.FILES)
+        print(ticket_form.is_valid())
         if all([ticket_form.is_valid(), photo_form.is_valid()]):
             photo = photo_form.save(commit=False)
             photo.uploader = request.user
@@ -50,6 +51,7 @@ def create_ticket(request):
             ticket.image = photo
             ticket.save()
             return redirect("home")
+
     my_forms = [ticket_form, photo_form]
 
     context = {"forms": my_forms}
@@ -67,8 +69,10 @@ def edit_ticket(request, ticket_id):
             edit_photo = forms.PhotoForm(request.POST, instance=ticket.image)
             edit_form = forms.TicketForm(request.POST, instance=ticket)
             if all([edit_form.is_valid(), edit_photo.is_valid()]):
-                edit_photo.save()
-                edit_form.image = edit_photo
+                photo = edit_photo.save(commit=False)
+                photo.uploader = request.user
+                photo.save()
+                edit_form.image = photo
                 edit_form.save()
                 return redirect("home")
 
