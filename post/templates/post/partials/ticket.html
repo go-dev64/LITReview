@@ -5,9 +5,9 @@
     <div class="row g-0 align-items-center border-bottom">
         <div class="col-md-5 m-1 p-1">
             {% if ticket.image.image %}
-                <img src="{{ticket.image.image.url}}" class="card-img-left rounded-start" style ="max-width: 350px" alt="image du ticket">
+                <img src="{{ticket.image.image.url}}" class="card-img-left rounded-start" style ="max-width:350px" alt="image du ticket">
             {% else %}
-                <img src="{% static 'images/livre_default.jpg'%}"  class="card-img-left rounded-start" style ="max-width: 350px" alt="image par default du ticket">
+                <img src="{% static 'images/livre_default.jpg'%}"  class="card-img-left rounded-start" style ="max-width: 250px; "  alt="image par default du ticket">
             {% endif %}
         </div>
         <div class="col-md-6 text-center w-80" >
