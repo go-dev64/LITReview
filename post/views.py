@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import CharField, Value, Q
 from django.shortcuts import get_object_or_404, redirect, render
@@ -41,16 +42,27 @@ def create_ticket(request):
     if request.method == "POST":
         ticket_form = forms.TicketForm(request.POST)
         photo_form = forms.PhotoForm(request.POST, request.FILES)
-        print(ticket_form.is_valid())
+
         if all([ticket_form.is_valid(), photo_form.is_valid()]):
-            photo = photo_form.save(commit=False)
-            photo.uploader = request.user
-            photo.save()
-            ticket = ticket_form.save(commit=False)
-            ticket.user = request.user
-            ticket.image = photo
+            if "image" not in photo_form:
+                ticket = ticket_form.save(commit=False)
+                ticket.user = request.user
+            else:
+                photo = photo_form.save(commit=False)
+                photo.uploader = request.user
+                photo.save()
+                ticket = ticket_form.save(commit=False)
+                ticket.user = request.user
+                ticket.image = photo
+
             ticket.save()
+            messages.success(request, f"tixket créée avec succés.")
+
             return redirect("home")
+
+        else:
+            messages.error(request)
+            return redirect("post/create_ticket.html")
 
     my_forms = [ticket_form, photo_form]
 
@@ -69,17 +81,23 @@ def edit_ticket(request, ticket_id):
             edit_photo = forms.PhotoForm(request.POST, instance=ticket.image)
             edit_form = forms.TicketForm(request.POST, instance=ticket)
             if all([edit_form.is_valid(), edit_photo.is_valid()]):
-                photo = edit_photo.save(commit=False)
-                photo.uploader = request.user
-                photo.save()
-                edit_form.image = photo
+                if "image" not in edit_photo:
+                    edit_form.save(commit=False)
+                else:
+                    photo = edit_photo.save(commit=False)
+                    photo.uploader = request.user
+                    photo.save()
+                    edit_form.image = photo
+
                 edit_form.save()
+                messages.success(request, f"Ticke modifié avec succés.")
                 return redirect("home")
 
         if "delete_ticket" in request.POST:
             delete_form = forms.DeleteTicketForm(request.POST)
             if delete_form.is_valid():
                 ticket.delete()
+                messages.success(request, f"Ticket supprimé avec succés.")
                 return redirect("home")
 
     my_forms = [edit_form, edit_photo]
