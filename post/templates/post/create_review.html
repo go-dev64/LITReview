@@ -9,6 +9,11 @@
         {% for form in forms %}
             {% csrf_token %}
             {% crispy form %}
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    {{ form.errors }}
+                </div>
+            {% endif %}
         {% endfor %}
         <div class="m-3">
             <a class="btn btn-secondary" href="{% url 'home' %}" role="button">Annuler</a>

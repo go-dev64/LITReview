@@ -45,7 +45,6 @@ class ReviewForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields["headline"].label = "Titre"
         self.fields["rating"].label = "Note"
-        self.fields["rating"].choices = [1, 2, 3, 4, 5]
         self.fields["body"].label = "Commentaire"
         self.helper = FormHelper()
         self.helper.form_tag = False
@@ -54,7 +53,7 @@ class ReviewForm(forms.ModelForm):
                 "Publier une  critique sur un Livre / Article",
                 Row(
                     Column("headline"),
-                    Column(bootstrap.InlineRadios("rating")),
+                    Column("rating"),
                 ),
                 Row(Column("body")),
                 css_class="border rounded-2 p-3",
@@ -77,4 +76,3 @@ class PhotoForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_tag = False
-        # self.helper.layout = Layout()

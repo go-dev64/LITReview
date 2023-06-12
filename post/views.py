@@ -90,7 +90,7 @@ def edit_ticket(request, ticket_id):
                     edit_form.image = photo
 
                 edit_form.save()
-                messages.success(request, f"Ticke modifié avec succés.")
+                messages.success(request, f"Ticket modifié avec succés.")
                 return redirect("home")
 
         if "delete_ticket" in request.POST:
@@ -125,17 +125,23 @@ def create_review(request):
                 review_form.is_valid(),
             ]
         ):
-            photo = photo_form.save(commit=False)
-            photo.uploader = request.user
-            photo.save()
-            ticket = ticket_form.save(commit=False)
-            ticket.user = request.user
-            ticket.image = photo
+            if "image" not in photo_form:
+                ticket = ticket_form.save(commit=False)
+                ticket.user = request.user
+            else:
+                photo = photo_form.save(commit=False)
+                photo.uploader = request.user
+                photo.save()
+                ticket = ticket_form.save(commit=False)
+                ticket.user = request.user
+                ticket.image = photo
+
             ticket.save()
             review = review_form.save(commit=False)
             review.ticket = ticket
             review.user = request.user
             review.save()
+            messages.success(request, f"Critique publiée avec succés.")
             return redirect("home")
 
     my_forms = [ticket_form, photo_form, review_form]
