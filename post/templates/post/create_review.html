@@ -10,8 +10,10 @@
             {% csrf_token %}
             {% crispy form %}
         {% endfor %}
-        <a class="btn btn-secondary" href="{% url 'home' %}" role="button">Annuler</a>
-        <button class="btn btn-secondary" type="submit">Envoyer</button>
+        <div class="m-3">
+            <a class="btn btn-secondary" href="{% url 'home' %}" role="button">Annuler</a>
+            <button class="btn btn-primary" type="submit">Envoyer</button>
+        </div>
     </form>
 </div>
 {% endblock content %}
