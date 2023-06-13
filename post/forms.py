@@ -1,3 +1,4 @@
+from ast import Div
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Column, Row
 from crispy_forms import bootstrap
@@ -31,6 +32,7 @@ class DeleteTicketForm(forms.Form):
 
 
 class ReviewForm(forms.ModelForm):
+    RATING = ((1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5"))
     edit_review = forms.BooleanField(widget=forms.HiddenInput, initial=True, required=False)
 
     class Meta:
@@ -44,7 +46,8 @@ class ReviewForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["headline"].label = "Titre"
-        self.fields["rating"].label = "Note"
+        self.fields["rating"] = forms.ChoiceField(choices=self.RATING, widget=forms.RadioSelect())
+        self.fields["rating"].label = "Donner une note"
         self.fields["body"].label = "Commentaire"
         self.helper = FormHelper()
         self.helper.form_tag = False
@@ -53,7 +56,7 @@ class ReviewForm(forms.ModelForm):
                 "Publier une  critique sur un Livre / Article",
                 Row(
                     Column("headline"),
-                    Column("rating"),
+                    Column(bootstrap.InlineRadios("rating"), css_class="ms-2 p-2 text-center"),
                 ),
                 Row(Column("body")),
                 css_class="border rounded-2 p-3",
