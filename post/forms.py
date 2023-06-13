@@ -33,7 +33,7 @@ class DeleteTicketForm(forms.Form):
 
 class ReviewForm(forms.ModelForm):
     RATING = ((1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5"))
-    edit_review = forms.BooleanField(widget=forms.HiddenInput, initial=True, required=False)
+    edit_review = forms.BooleanField(widget=forms.HiddenInput, initial=True, disabled=True)
 
     class Meta:
         model = models.Review

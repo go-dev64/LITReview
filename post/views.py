@@ -13,6 +13,7 @@ from . import forms
 
 @login_required
 def home(request):
+    """Home view , display flux of user with post of user followed by user connected"""
     reviews = models.Review.objects.filter(Q(user=request.user) | Q(user__in=request.user.following.all()))
     reviews = reviews.annotate(content_type=Value("REVIEW", CharField()))
 
@@ -37,6 +38,14 @@ def home(request):
 
 @login_required
 def create_ticket(request):
+    """view of create new ticket
+
+    Args:
+        request (_type_): _description_
+
+    Returns:
+        _type_: New instance of Ticket Models
+    """
     ticket_form = forms.TicketForm()
     photo_form = forms.PhotoForm()
     if request.method == "POST":
@@ -72,6 +81,15 @@ def create_ticket(request):
 
 @login_required
 def edit_ticket(request, ticket_id):
+    """View of edit Ticket. change or delete ticket
+
+    Args:
+        request (_type_): _description_
+        ticket_id (_type_): id of ticket will be mofified
+
+    Returns:
+        _type_: Return instance modified
+    """
     ticket = get_object_or_404(models.Ticket, id=ticket_id)
     edit_form = forms.TicketForm(instance=ticket)
     edit_photo = forms.PhotoForm(instance=ticket.image)
@@ -111,6 +129,14 @@ def edit_ticket(request, ticket_id):
 
 @login_required
 def create_review(request):
+    """view of create a new ticket with this review
+
+    Args:
+        request (_type_): _description_
+
+    Returns:
+        _type_: New instance of Ticket Models linked wityh a new instance of Review
+    """
     ticket_form = forms.TicketForm()
     photo_form = forms.PhotoForm()
     review_form = forms.ReviewForm()
@@ -152,6 +178,15 @@ def create_review(request):
 
 @login_required
 def review_ticket(request, ticket_id):
+    """View of review a already existing ticket
+
+    Args:
+        request (_type_): _description_
+        ticket_id (_type_): id of ticket will be reviewed
+
+    Returns:
+        _type_: Return instance review
+    """
     ticket = get_object_or_404(models.Ticket, id=ticket_id)
     review_form = forms.ReviewForm()
     if request.method == "POST":
@@ -161,6 +196,7 @@ def review_ticket(request, ticket_id):
             review.ticket = ticket
             review.user = request.user
             review.save()
+            messages.success(request, f"Critique publiée avec succés.")
             return redirect("home")
 
     context = {
@@ -172,20 +208,35 @@ def review_ticket(request, ticket_id):
 
 @login_required
 def edit_review(request, review_id):
+    """View of edit Review. change or delete Review
+
+    Args:
+        request (_type_): _description_
+        ticket_id (_type_): id of Review will be mofified
+
+    Returns:
+        _type_: Return instance modified of review
+    """
     review = get_object_or_404(models.Review, id=review_id)
     edit_form = forms.ReviewForm(instance=review)
     delete_form = forms.DeleteReview()
     if request.method == "POST":
-        if "edit_review" in request.POST:
+        if "body" in request.POST:
             edit_form = forms.ReviewForm(request.POST, instance=review)
             if edit_form.is_valid():
-                edit_form.save()
+                review_modified = edit_form.save(commit=False)
+                review_modified.save()
+                messages.success(request, f"Critique publiée avec succés.")
                 return redirect("home")
+            else:
+                messages.error(request, edit_form.errors)
+                return redirect("post/edit_review.html")
 
         if "delete_review" in request.POST:
             delete_form = forms.DeleteReview(request.POST)
             if delete_form.is_valid():
                 review.delete()
+                messages.success(request, f"Critique supprimée avec succés.")
                 return redirect("home")
 
     context = {
@@ -197,6 +248,14 @@ def edit_review(request, review_id):
 
 
 def view_user_posts(request):
+    """view of element posted by the user connected
+
+    Args:
+        request (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     reviews = models.Review.objects.filter(user=request.user)
     # returns queryset of reviews
     reviews = reviews.annotate(content_type=Value("REVIEW", CharField()))
