@@ -1,13 +1,13 @@
 {% load static %}
 {% load post_extra %}
-<div class="card text-dark bg-light mb-3">
+<div class="card text-dark bg-light mb-3" style="max-width:750px">
     {% include "post/partials/header_card.html" with element=ticket %}
     <div class="row g-0 align-items-center justify-content-around border-bottom border-2 p-2">
         <div class="col-md-5 text-center">
             {% if ticket.image.image %}
-                <img src="{{ticket.image.image.url}}" class="card-img-left rounded-start img-fluid w-100" alt="image du ticket">
+                <img src="{{ticket.image.image.url}}" class="card-img-left rounded-start img-fluid w-auto h-auto" style="max-height:250px" alt="image du ticket">
             {% else %}
-                <img src="{% static 'images/livre_default.jpg'%}"  class="card-img-left rounded-start img-fluid w-100" alt="image par default du ticket">
+                <img src="{% static 'images/livre_default.jpg'%}"  class="card-img-left rounded-start img-fluid w-auto h-auto" style="max-height:250px" alt="image par default du ticket">
             {% endif %}
         </div>
         <div class="vr"></div>

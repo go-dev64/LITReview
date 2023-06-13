@@ -1,13 +1,13 @@
 {% load static %}
 {% if user.is_authenticated %}
-  <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark vh-100 position-fixed" style="">
-    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+  <div class="d-flex flex-column flex-shrink-0 p-4 text-white bg-dark vh-100 position-fixed w-25">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto  text-white text-decoration-none ps-md-2 ps-xl-5">
       <img src="{% static 'images/logo_litreview.png'%}" class="bi me-2" width="40" height="32">
       <span class="fs-4">LITReview</span>
     </a>
     <hr>
     <div class="profil">
-      <a href="{% url 'profile_view'%}" class="d-flex align-items-center text-white text-decoration-none" >
+      <a href="{% url 'profile_view'%}" class="d-flex align-items-center text-white text-decoration-none ps-md-0 ps-xl-5" >
         {% if user.profil_photo %}
         <img src="{{ user.profil_photo.url }}" alt="{{user.username}}" width="50" height="50" class="rounded-circle me-3">
         {% else %}
@@ -17,32 +17,32 @@
       </a>
     </div>
     <hr>
-    <ul class="nav nav-pills flex-column mb-auto">
-      <li class="nav-item">
+    <ul class="nav nav-pills flex-column mb-auto ps-md-0 ps-xl-5">
+      <li class="nav-item pt-3">
         <a href="{% url 'home' %}" class="nav-link text-white" aria-current="page">
           <svg class="bi me-2 " width="30" height="30" fill="white"><use xlink:href="#home"></use></svg>
           <strong>Votre Flux</strong> 
         </a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item pt-3">
         <a href="{% url 'view_user_posts'%}" class="nav-link text-white">
           <svg class="bi me-2" width="30" height="30" fill="white"><use xlink:href="#collection"></use></svg>
           <strong>Vos Posts</strong>
         </a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item pt-3">
         <a href="{% url 'follower_page' %}" class="nav-link text-white">
           <svg class="bi me-2" width="30" height="30" fill="white"><use xlink:href="#people-fill"></use></svg>
           <strong>Abonnements</strong>
         </a>
       </li>
-      <li class="nav-item dropdown">
+      <li class="nav-item pt-3 dropdown">
         <a href="#" class="nav-link text-white dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
           <svg class="bi me-2" width="30" height="30" fill="white"><use xlink:href="#file-plus-fill"></use></svg>
           <strong>Publier</strong>
         </a>
-        <hr>
-        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+        
+        <ul class="dropdown-menu dropdown-menu-dark text-small shadow ps-md-2 ps-xl-5" aria-labelledby="dropdownUser1">
           <li><a class="dropdown-item" href="{% url 'create_review' %}">Publier une critique</a></li>
           <li><a class="dropdown-item" href="{% url 'create_ticket' %}">Publier une demande d'avis</a></li>
         </ul>
