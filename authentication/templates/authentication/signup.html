@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="container">
-    <div class="row align-items-center">
+<div class="container position-absolute top-0 start-0 vw-100" style="right:0px">
+    {% include 'authentication/partials/navbar_connexion.html' %}
+    <div class="row align-items-center m-5 pt-5">
         <div class="col-12 text-center">
             <h2>Inscription</h2>
             {% if form.errors %}

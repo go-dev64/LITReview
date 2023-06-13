@@ -9,9 +9,9 @@
     <div class="profil">
       <a href="{% url 'profile_view'%}" class="d-flex align-items-center text-white text-decoration-none" >
         {% if user.profil_photo %}
-        <img src="{{ user.profil_photo.url }}" alt="{{user.username}}" width="32" height="32" class="rounded-circle me-3">
+        <img src="{{ user.profil_photo.url }}" alt="{{user.username}}" width="50" height="50" class="rounded-circle me-3">
         {% else %}
-        <img src="{% static 'images/default_profile.png'%}" alt="{{user.username}}" width="32" height="32" class="rounded-circle me-2">
+        <img src="{% static 'images/default_profile.png'%}" alt="{{user.username}}" width="50" height="50" class="rounded-circle me-2">
         {% endif %}
         <strong>{{user.username}}</strong>
       </a>
@@ -20,25 +20,25 @@
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
         <a href="{% url 'home' %}" class="nav-link text-white" aria-current="page">
-          <svg class="bi me-2 " width="25" height="25" fill="white"><use xlink:href="#home"></use></svg>
+          <svg class="bi me-2 " width="30" height="30" fill="white"><use xlink:href="#home"></use></svg>
           <strong>Votre Flux</strong> 
         </a>
       </li>
       <li class="nav-item">
         <a href="{% url 'view_user_posts'%}" class="nav-link text-white">
-          <svg class="bi me-2" width="25" height="25" fill="white"><use xlink:href="#collection"></use></svg>
+          <svg class="bi me-2" width="30" height="30" fill="white"><use xlink:href="#collection"></use></svg>
           <strong>Vos Posts</strong>
         </a>
       </li>
       <li class="nav-item">
         <a href="{% url 'follower_page' %}" class="nav-link text-white">
-          <svg class="bi me-2" width="25" height="25" fill="white"><use xlink:href="#people-fill"></use></svg>
+          <svg class="bi me-2" width="30" height="30" fill="white"><use xlink:href="#people-fill"></use></svg>
           <strong>Abonnements</strong>
         </a>
       </li>
       <li class="nav-item dropdown">
         <a href="#" class="nav-link text-white dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-          <svg class="bi me-2" width="25" height="25" fill="white"><use xlink:href="#file-plus-fill"></use></svg>
+          <svg class="bi me-2" width="30" height="30" fill="white"><use xlink:href="#file-plus-fill"></use></svg>
           <strong>Publier</strong>
         </a>
         <hr>
@@ -52,7 +52,7 @@
     <ul class="nav nav-pills flex-column">      
       <li>
         <a href="{% url 'account_logout' %}" class="nav-link text-white">
-          <svg  class="bi bi-box-arrow-left me-2" width="25" height="25" fill="white"  viewBox="0 0 16 16"><use xlink:href="#box-arrow-left"></use>
+          <svg  class="bi bi-box-arrow-left me-2" width="30" height="30" fill="white"  viewBox="0 0 16 16"><use xlink:href="#box-arrow-left"></use>
           </svg>
           <strong>Déconnexion</strong>
         </a>

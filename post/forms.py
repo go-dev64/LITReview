@@ -1,8 +1,8 @@
-from ast import Div
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Column, Row
 from crispy_forms import bootstrap
 from django import forms
+from .form_layouts import TicketFormLayout, ReviewFormLayout
 
 from . import models
 
@@ -22,9 +22,7 @@ class TicketForm(forms.ModelForm):
         self.fields["title"].label = "Titre"
         self.helper = FormHelper()
         self.helper.form_tag = False
-        self.helper.layout = Layout(
-            Fieldset("Demande de critique sur un Livre / Article", "title", "description"),
-        )
+        self.helper.layout = TicketFormLayout()
 
 
 class DeleteTicketForm(forms.Form):
@@ -51,17 +49,7 @@ class ReviewForm(forms.ModelForm):
         self.fields["body"].label = "Commentaire"
         self.helper = FormHelper()
         self.helper.form_tag = False
-        self.helper.layout = Layout(
-            Fieldset(
-                "Publier une  critique sur un Livre / Article",
-                Row(
-                    Column("headline"),
-                    Column(bootstrap.InlineRadios("rating"), css_class="ms-2 p-2 text-center"),
-                ),
-                Row(Column("body")),
-                css_class="border rounded-2 p-3",
-            )
-        )
+        self.helper.layout = ReviewFormLayout()
 
 
 class DeleteReview(forms.Form):
