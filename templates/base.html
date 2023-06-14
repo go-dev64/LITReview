@@ -17,7 +17,12 @@
 </head>
 <body>
   <header>
-    {% include 'partials/messages_alert.html' %}
+    <div class="d-md-none">
+      {% include 'partials/navbar_header.html' %}
+    </div>
+    <div class="w-auto pt-5 pt-md-0">
+      {% include 'partials/messages_alert.html' %}
+    </div>
   </header>
   <main>
     <div class="container-fluid m-0 p-0">
@@ -25,7 +30,7 @@
         <nav class="d-none d-md-grid col-3 pe-5 ">
           {% include 'partials/sidebar.html' %}
         </nav>
-        <div class="pt-4 mt-4 col-12 p-1 col-md-9 pe-md-4">
+        <div class="pt-5 mt-4 col-12 p-1 col-md-9 pe-md-4">
           {% block content %}{% endblock content %}
         </div>
       </div>

@@ -17,7 +17,7 @@
       </a>
     </div>
     <hr>
-    <ul class="nav nav-pills flex-column mb-auto ps-md-0 ps-xl-5">
+    <ul class="nav nav-pills flex-column mb-auto ps-md-0 ps-xl-5 h-100">
       <li class="nav-item pt-3">
         <a href="{% url 'home' %}" class="nav-link text-white" aria-current="page">
           <svg class="bi me-2 " width="30" height="30" fill="white"><use xlink:href="#home"></use></svg>
@@ -33,7 +33,7 @@
       <li class="nav-item pt-3">
         <a href="{% url 'follower_page' %}" class="nav-link text-white">
           <svg class="bi me-2" width="30" height="30" fill="white"><use xlink:href="#people-fill"></use></svg>
-          <strong>Abonnements</strong>
+          <strong>Réseau</strong>
         </a>
       </li>
       <li class="nav-item pt-3 dropdown">
@@ -41,18 +41,15 @@
           <svg class="bi me-2" width="30" height="30" fill="white"><use xlink:href="#file-plus-fill"></use></svg>
           <strong>Publier</strong>
         </a>
-        
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow ps-md-2 ps-xl-5" aria-labelledby="dropdownUser1">
           <li><a class="dropdown-item" href="{% url 'create_review' %}">Publier une critique</a></li>
           <li><a class="dropdown-item" href="{% url 'create_ticket' %}">Publier une demande d'avis</a></li>
         </ul>
       </li>
-    </ul>
-    <hr> 
-    <ul class="nav nav-pills flex-column">      
-      <li>
+      <li class="mt-auto">
+        <hr>
         <a href="{% url 'account_logout' %}" class="nav-link text-white">
-          <svg  class="bi bi-box-arrow-left me-2" width="30" height="30" fill="white"  viewBox="0 0 16 16"><use xlink:href="#box-arrow-left"></use>
+          <svg  class="bi bi-box-arrow-left me-2" width="30" height="30" fill="white"><use xlink:href="#box-arrow-left"></use>
           </svg>
           <strong>Déconnexion</strong>
         </a>

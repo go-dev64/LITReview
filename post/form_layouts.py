@@ -25,6 +25,5 @@ class ReviewFormLayout(Layout):
                 "headline",
                 Div(bootstrap.InlineRadios("rating"), css_class="ms-2 p-2 text-center"),
                 "body",
-                css_class="border rounded-2 p-3",
             )
         )
