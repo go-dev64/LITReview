@@ -5,14 +5,17 @@
         <h2 class="text-center mb-5">Création de la critque du ticket : {{ticket.title}} </h2>
         {% include "post/partials/ticket.html" with ticket=ticket %}
         <div class="container border rounded-2 p-2">
-            <div class="">
-                <form method="post" enctype="multipart/form-data">
-                    {{ review_form|crispy}}
-                    {% csrf_token %}
-                    <a class="btn btn-secondary" href="{% url 'home' %}" role="button">Annuler</a>
-                    <button class="btn btn-primary" type="submit" >Envoyer</button>
-                </form>
-            </div>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {%crispy forms%}
+                {% if forms.errors %}
+                    <div class="alert alert-danger">
+                        <p>{{ forms.errors }}</p>
+                    </div>
+                {% endif %}
+                <a class="btn btn-secondary" href="{% url 'home' %}" role="button">Annuler</a>
+                <button class="btn btn-primary" type="submit" >Envoyer</button>
+            </form>
         </div>
     </div>
 {% endblock content %}
