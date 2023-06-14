@@ -6,7 +6,13 @@ class TicketFormLayout(Layout):
     """Set layout form of create ticket"""
 
     def __init__(self):
-        super().__init__(Fieldset("Demande de critique sur un Livre / Article", "title", "description"))
+        super().__init__(
+            Fieldset(
+                "Demande de critique sur un Livre / Article",
+                "title",
+                "description",
+            ),
+        )
 
 
 class ReviewFormLayout(Layout):

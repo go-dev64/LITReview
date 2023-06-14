@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <div class="container">
+    <div class="container" style="max-width:850px">
         <h3 class="text-center">Modifier le ticket N° {{ticket.id}}</h3>
         {% include 'post/partials/ticket.html' %}
         <form method="post" enctype="multipart/form-data">
@@ -28,6 +28,3 @@
         </form>
     </div>
 {% endblock content %}
-
-
-

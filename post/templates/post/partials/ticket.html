@@ -1,6 +1,6 @@
 {% load static %}
 {% load post_extra %}
-<div class="card text-dark bg-light mb-3" style="max-width:750px">
+<div class="card text-dark bg-light mb-3" style="max-width:850px">
     {% include "post/partials/header_card.html" with element=ticket %}
     <div class="row g-0 align-items-center justify-content-around border-bottom border-2 p-2">
         <div class="col-md-5 text-center">
@@ -10,7 +10,7 @@
                 <img src="{% static 'images/livre_default.jpg'%}"  class="card-img-left rounded-start img-fluid w-auto h-auto" style="max-height:250px" alt="image par default du ticket">
             {% endif %}
         </div>
-        <div class="vr"></div>
+        <div class="d-none  d-md-block vr"></div>
         <div class="col-md-6 text-center" >
             <div class="card-body">
                 <h4 class="card-title">{{ticket.title}}</h4>
