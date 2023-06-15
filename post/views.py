@@ -51,26 +51,28 @@ def create_ticket(request):
     if request.method == "POST":
         ticket_form = forms.TicketForm(request.POST)
         photo_form = forms.PhotoForm(request.POST, request.FILES)
-
+        print(photo_form.data)
         if all([ticket_form.is_valid(), photo_form.is_valid()]):
-            if "image" not in photo_form:
-                ticket = ticket_form.save(commit=False)
-                ticket.user = request.user
-            else:
+            if "image" in photo_form:
                 photo = photo_form.save(commit=False)
                 photo.uploader = request.user
                 photo.save()
                 ticket = ticket_form.save(commit=False)
                 ticket.user = request.user
                 ticket.image = photo
+                ticket.save()
+                messages.success(request, f"ticket créée avec succés.")
+                return redirect("home")
 
-            ticket.save()
-            messages.success(request, f"tixket créée avec succés.")
-
-            return redirect("home")
+            else:
+                ticket = ticket_form.save(commit=False)
+                ticket.user = request.user
+                ticket.save()
+                messages.success(request, f"ticket créée avec succés.")
+                return redirect("home")
 
         else:
-            messages.error(request)
+            messages.error(request, f"Ooppps il'y a eu un problème....")
             return redirect("post/create_ticket.html")
 
     my_forms = [ticket_form, photo_form]
