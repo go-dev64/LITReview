@@ -36,6 +36,51 @@ def home(request):
     )
 
 
+def get_photo(user, photo_form):
+    """define photo uploader and save photo
+
+    Args:
+        request (_type_): _description_
+        photo_form (_type_): photo form
+
+    Returns:
+        _type_: Photo Instance
+    """
+    photo = photo_form.save(commit=False)
+    photo.uploader = user
+    photo.save()
+    return photo
+
+
+def get_ticket(user, ticket_form):
+    """
+    Args:
+        request (_type_): _description_
+        ticket_form (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    ticket = ticket_form.save(commit=False)
+    ticket.user = user
+    return ticket
+
+
+def get_ticket_with_photo(user, ticket_form, photo_form):
+    photo = get_photo(user, photo_form)
+    ticket = get_ticket(user, ticket_form)
+    ticket.image = photo
+    return ticket
+
+
+def get_review(user, review_form, ticket):
+    review = review_form.save(commit=False)
+    review.ticket = ticket
+    review.user = user
+    review.save()
+    return review
+
+
 @login_required
 def create_ticket(request):
     """view of create new ticket
@@ -51,25 +96,16 @@ def create_ticket(request):
     if request.method == "POST":
         ticket_form = forms.TicketForm(request.POST)
         photo_form = forms.PhotoForm(request.POST, request.FILES)
-        print(photo_form.data)
         if all([ticket_form.is_valid(), photo_form.is_valid()]):
-            if "image" in photo_form:
-                photo = photo_form.save(commit=False)
-                photo.uploader = request.user
-                photo.save()
-                ticket = ticket_form.save(commit=False)
-                ticket.user = request.user
-                ticket.image = photo
-                ticket.save()
-                messages.success(request, f"ticket créée avec succés.")
-                return redirect("home")
+            if photo_form.cleaned_data["image"] is None:
+                ticket = get_ticket(request.user, ticket_form)
 
             else:
-                ticket = ticket_form.save(commit=False)
-                ticket.user = request.user
-                ticket.save()
-                messages.success(request, f"ticket créée avec succés.")
-                return redirect("home")
+                ticket = get_ticket_with_photo(request.user, ticket_form, photo_form)
+
+            ticket.save()
+            messages.success(request, f"Ticket créée avec succés.")
+            return redirect("home")
 
         else:
             messages.error(request, f"Ooppps il'y a eu un problème....")
@@ -93,23 +129,21 @@ def edit_ticket(request, ticket_id):
         _type_: Return instance modified
     """
     ticket = get_object_or_404(models.Ticket, id=ticket_id)
-    edit_form = forms.TicketForm(instance=ticket)
-    edit_photo = forms.PhotoForm(instance=ticket.image)
+    ticket_form = forms.TicketForm(instance=ticket)
+    photo_form = forms.PhotoForm(instance=ticket.image)
     delete_form = forms.DeleteTicketForm()
     if request.method == "POST":
         if "edit_ticket" in request.POST:
-            edit_photo = forms.PhotoForm(request.POST, instance=ticket.image)
-            edit_form = forms.TicketForm(request.POST, instance=ticket)
-            if all([edit_form.is_valid(), edit_photo.is_valid()]):
-                if "image" not in edit_photo:
-                    edit_form.save(commit=False)
+            photo_form = forms.PhotoForm(request.POST, instance=ticket.image)
+            ticket_form = forms.TicketForm(request.POST, instance=ticket)
+            if all([ticket_form.is_valid(), photo_form.is_valid()]):
+                if photo_form.cleaned_data["image"] is None:
+                    ticket_form.save(commit=False)
                 else:
-                    photo = edit_photo.save(commit=False)
-                    photo.uploader = request.user
-                    photo.save()
-                    edit_form.image = photo
+                    photo = get_photo(request.user, photo_form)
+                    ticket_form.image = photo
 
-                edit_form.save()
+                ticket_form.save()
                 messages.success(request, f"Ticket modifié avec succés.")
                 return redirect("home")
 
@@ -120,7 +154,7 @@ def edit_ticket(request, ticket_id):
                 messages.success(request, f"Ticket supprimé avec succés.")
                 return redirect("home")
 
-    my_forms = [edit_form, edit_photo]
+    my_forms = [ticket_form, photo_form]
     context = {
         "ticket": ticket,
         "forms": my_forms,
@@ -153,22 +187,13 @@ def create_review(request):
                 review_form.is_valid(),
             ]
         ):
-            if "image" not in photo_form:
-                ticket = ticket_form.save(commit=False)
-                ticket.user = request.user
+            if photo_form.cleaned_data["image"] is None:
+                ticket = get_ticket(request.user, ticket_form)
             else:
-                photo = photo_form.save(commit=False)
-                photo.uploader = request.user
-                photo.save()
-                ticket = ticket_form.save(commit=False)
-                ticket.user = request.user
-                ticket.image = photo
+                ticket = get_ticket_with_photo(request.user, ticket_form, photo_form)
 
             ticket.save()
-            review = review_form.save(commit=False)
-            review.ticket = ticket
-            review.user = request.user
-            review.save()
+            get_review(request.user, review_form, ticket)
             messages.success(request, f"Critique publiée avec succés.")
             return redirect("home")
 
@@ -194,10 +219,7 @@ def review_ticket(request, ticket_id):
     if request.method == "POST":
         review_form = forms.ReviewForm(request.POST)
         if review_form.is_valid():
-            review = review_form.save(commit=False)
-            review.ticket = ticket
-            review.user = request.user
-            review.save()
+            get_review(request.user, review_form, ticket)
             messages.success(request, f"Critique publiée avec succés.")
             return redirect("home")
 
@@ -220,18 +242,18 @@ def edit_review(request, review_id):
         _type_: Return instance modified of review
     """
     review = get_object_or_404(models.Review, id=review_id)
-    edit_form = forms.ReviewForm(instance=review)
+    review_form = forms.ReviewForm(instance=review)
     delete_form = forms.DeleteReview()
     if request.method == "POST":
         if "body" in request.POST:
-            edit_form = forms.ReviewForm(request.POST, instance=review)
-            if edit_form.is_valid():
-                review_modified = edit_form.save(commit=False)
+            review_form = forms.ReviewForm(request.POST, instance=review)
+            if review_form.is_valid():
+                review_modified = review_form.save(commit=False)
                 review_modified.save()
                 messages.success(request, f"Critique publiée avec succés.")
                 return redirect("home")
             else:
-                messages.error(request, edit_form.errors)
+                messages.error(request, review_form.errors)
                 return redirect("post/edit_review.html")
 
         if "delete_review" in request.POST:
@@ -242,7 +264,7 @@ def edit_review(request, review_id):
                 return redirect("home")
 
     context = {
-        "edit_form": edit_form,
+        "edit_form": review_form,
         "delete_form": delete_form,
         "review": review,
     }
