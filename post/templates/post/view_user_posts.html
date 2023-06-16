@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load post_extra %}
+{% block content %}
+    <div class="container text-center " style="max-width:850px">
+        <h2 class="mb-5">Vos publications</h2>       
+        {% for post in posts %}
+            <div class="row">
+                <div class="col-12">
+                    {% if post|model_type == 'Ticket' %}
+                        {% include "post/partials/ticket.html" with ticket=post %}
+                    {% elif post|model_type == 'Review' %}
+                        {% include "post/partials/review.html" with review=post %}
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

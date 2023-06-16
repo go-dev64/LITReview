@@ -1,11 +1,21 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
-<p>page de connexion</p>
-    <p>{{ message }}</p>
-    <form method="post">
-        {{ form.as_p }}
-        {% csrf_token %}
-        <button type="submit" >Se connecter</button>
-    </form>
-    <p>Pas encore membre ? <a href="{% url 'signup' %}">Inscrivez-vous maintenant !</a></p>
+<div class="container min-vw-100 position-absolute top-0 start-0 text-center">
+    {% include 'authentication/partials/navbar_connexion.html' %}
+    <div class="row align-items-center m-5 pt-5">
+        <div class="col-6 text-center">
+            <h3>Pas encore membre?</h3>
+            <a class="btn btn-primary" href="{% url 'account_signup' %}" role="button">Inscrivez-vous maintenant!</a>
+        </div>
+        <div class="col-6 text-center">
+            <h3>Connectez-vous</h3>
+            <form method="post">
+                {{ form|crispy }}
+                {% csrf_token %}
+                <button class="btn btn-primary" type="submit" >Se connecter</button>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock content %}

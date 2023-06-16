@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container" style="max-width:850px">
+    <h2 class="text-center">Créer une demande de critique</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% for form in forms %}
+            {% csrf_token %}
+            {%crispy form%}
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    {{ form.errors }}
+                </div>
+            {% endif %}
+        {% endfor %}
+        <a class="btn btn-secondary" href="{% url 'home' %}" role="button">Annuler</a>
+        <button class="btn btn-primary" type="submit">Envoyer</button>
+    </form>
+</div>
+{% endblock content %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="container" style="max-width:850px">
+        <h3 class="text-center">Modifier la critique N°{{review.id}} </h3>
+        {% include 'post/partials/review.html' %}
+        <form method="post">
+            {% csrf_token %}
+            {%crispy edit_form%}
+            {% if edit_form.errors %}
+                <div class="alert alert-danger">
+                    <p>{{ edit_form.errors }}</p>
+                </div>
+            {% endif %}
+            <div class="m-3">
+                <a class="btn btn-secondary" href="{% url 'home' %}" role="button">Annuler</a>
+                <button class="btn btn-primary" type="submit">Envoyer</button>
+            </div>
+        </form>
+        <hr>
+        <h3 class="text-center">Supprimer la critique N°{{review.id}}</h3>
+        <form method="post">
+            {{ delete_form }}
+            {% csrf_token %}
+            <button type="submit" class="btn btn-secondary m-3" >Supprimer</button>
+        </form>
+    </div>        
+{% endblock content %}

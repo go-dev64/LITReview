@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="container" style="max-width:850px">
+        <h3 class="text-center">Modifier le ticket N° {{ticket.id}}</h3>
+        {% include 'post/partials/ticket.html' %}
+        <form method="post" enctype="multipart/form-data">
+            {% for form in forms %}
+                {% csrf_token %}
+                {{form|crispy}}
+                {% if form.errors %}
+                <div class="alert alert-danger">
+                    {{ form.errors }}
+                </div>
+            {% endif %}
+            {% endfor %}
+            <div class="m-3">
+                <a class="btn btn-secondary" href="{% url 'home' %}" role="button">Annuler</a>
+                <button class="btn btn-primary" type="submit">Envoyer</button>
+            </div>
+        </form>
+        <hr>
+        <h3 class="text-center">Supprimer le ticket N° {{ticket.id}}</h3>
+        <form method="post">
+            {{ delete_form }}
+            {% csrf_token %}
+            <button type="submit" class="btn btn-secondary m-3" >Supprimer</button>
+        </form>
+    </div>
+{% endblock content %}

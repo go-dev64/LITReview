@@ -1,0 +1,21 @@
+{% load static %}
+<div class="container w-75">
+    <div class="card mb-3 align-items-center">
+      <div class="mt-3">
+            <div class="d-flex justify-content-center align-items-center rounded-circle p-auto" style="width: 200px; height: 200px; overflow: hidden;">
+              {% if user.profil_photo %}
+                <img class="img-fluid rounded-circle" src={{ user.profil_photo.url }} alt="photo de profil personnalisée de l'utilisateur">
+                {% else %}
+                <img class="img-fluid rounded-circle" src="{% static 'images/default_profile.png'%}" alt="photo de profil par default de l'utilisateur">
+                {% endif %}
+            </div>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Hello, {{user}} </h5>
+      </div>
+      <div class="card-body">
+          <a href="{% url 'upload_profile_photo' %}" class="card-link btn btn-secondary" type="button">Changer votre photo de profil</a>
+          <a href="{% url 'password_change' %}" class="card-link btn btn-secondary" type="button">Changer votre mot de passe</a>
+      </div>
+    </div>
+  </div>

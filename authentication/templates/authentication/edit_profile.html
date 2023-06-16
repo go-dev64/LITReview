@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+  {% include 'authentication/partials/user_card.html' %}
+  {% include 'authentication/partials/form.html' with form=form %}
+</div>
+{% endblock content %}

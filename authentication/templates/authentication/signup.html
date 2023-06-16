@@ -1,12 +1,21 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
-    <h2>Inscription</h2>
-    {% if form.errors %}
-        {{ form.errors }}
-    {% endif %}
-    <form method="post">
-        {{ form.as_p }}
-        {% csrf_token %}
-        <button type="submit" >S’inscrire</button>
-    </form>
+<div class="container position-absolute top-0 start-0 vw-100" style="right:0px">
+    {% include 'authentication/partials/navbar_connexion.html' %}
+    <div class="row align-items-center m-5 pt-5">
+        <div class="col-12 text-center">
+            <h2>Inscription</h2>
+            {% if form.errors %}
+                {{ form.errors }}
+            {% endif %}
+            <form method="post">
+                {{ form|crispy }}
+                {% csrf_token %}
+                <a class="btn btn-secondary" href="{% url 'home' %}" role="button">Annuler</a>
+                <button class="btn btn-primary" type="submit" >S’inscrire</button>
+            </form>
+        </div>
+    </div>
+</div> 
 {% endblock content %}

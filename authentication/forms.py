@@ -14,3 +14,9 @@ class LoginForm(forms.Form):
     password = forms.CharField(
         max_length=63, widget=forms.PasswordInput, label="Mot de passe"
     )
+
+
+class UploadProfilePhotoForm(forms.ModelForm):
+    class Meta:
+        model = get_user_model()
+        fields = ("profil_photo",)

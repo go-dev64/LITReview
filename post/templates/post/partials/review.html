@@ -1,0 +1,32 @@
+{% load static %}
+{% load post_extra %}
+<div class="card text-dark bg-white mb-3" style="max-width:850px">
+    {% include "post/partials/header_card.html" with element=review %}
+    <div class="row m-1">
+        <div class="col-12 ">
+            <div class="btn-toolbar align-items-center" role="toolbar" aria-label="Toolbar with button groups">
+                <h5 class="m-1">{{review.headline}} - </h5>
+                <div class="btn-group mx-2" role="group" aria-label="First group">
+                    {% for i in review.rating|times %}
+                    <i class="bi bi-star-fill"></i>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row m-1">
+        <div class="col">
+            <p>{{review.body}} </p>
+        </div>
+    </div>
+    <div class="container w-90">
+        {% include "post/partials/ticket.html" with ticket=review.ticket %}
+    </div>
+    {% if user == review.user %}
+        <div class="d-flex bd-highlight border-top align-items-center">
+            <p class="my-0 p-2 bd-highlight">
+                <a href="{% url 'edit_review' review.id %}" class="btn btn-secondary m-2 ">Modifier la critique</a>
+            </p>
+        </div>
+    {% endif %}
+</div>
