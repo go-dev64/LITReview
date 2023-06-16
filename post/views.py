@@ -134,18 +134,19 @@ def edit_ticket(request, ticket_id):
     delete_form = forms.DeleteTicketForm()
     if request.method == "POST":
         if "edit_ticket" in request.POST:
-            photo_form = forms.PhotoForm(request.POST, instance=ticket.image)
+            new_photo_form = forms.PhotoForm(request.POST, request.FILES)
             ticket_form = forms.TicketForm(request.POST, instance=ticket)
-            if all([ticket_form.is_valid(), photo_form.is_valid()]):
-                if photo_form.cleaned_data["image"] is None:
-                    ticket_form.save(commit=False)
-                else:
-                    photo = get_photo(request.user, photo_form)
-                    ticket_form.image = photo
+            if all([ticket_form.is_valid(), new_photo_form.is_valid()]):
+                if new_photo_form.cleaned_data["image"] is None:
+                    ticket_form.save()
+                    messages.success(request, f"Ticket modifié avec succés.")
+                    return redirect("home")
 
-                ticket_form.save()
-                messages.success(request, f"Ticket modifié avec succés.")
-                return redirect("home")
+                else:
+                    ticket = get_ticket_with_photo(request.user, ticket_form, new_photo_form)
+                    ticket.save()
+                    messages.success(request, f"Ticket modifié avec succés.")
+                    return redirect("home")
 
         if "delete_ticket" in request.POST:
             delete_form = forms.DeleteTicketForm(request.POST)
