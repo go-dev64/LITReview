@@ -1,11 +1,13 @@
 {% load static %}
-    <div class="div-img center-center rounded-circle overflow-hidden m-2" style="width : 45px; height : 45px;">
-        {% if user.profil_photo%}
-        <img class="w-100 h-auto" src="{{ user.profil_photo.url }}" style="">
+<div class="">
+    <div class="d-flex justify-content-center align-items-center rounded-circle p-auto" style="width : 45px; height : 45px; overflow: hidden;">
+      {% if user.profil_photo %}
+        <img class="img-fluid rounded-circle w-100 h-100" src={{ user.profil_photo.url }} alt="photo de profil personnalisée de l'utilisateur">
         {% else %}
-        <img class="w-100 h-auto" src="{% static 'images/default_profile.png'%}" style="">
+        <img class="img-fluid rounded-circle" src="{% static 'images/default_profile.png'%}" alt="photo de profil par default de l'utilisateur">
         {% endif %}
     </div>
-    <div>
-        <p class="my-0 p-2 bd-highlight">{{user.username}}</p>
-    </div>
+</div>
+<div>
+    <p class="my-0 p-2 bd-highlight">{{user.username}}</p>
+</div>

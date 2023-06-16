@@ -1,12 +1,14 @@
 {% load static %}
 {% load post_extra %}
 <div class="d-flex bd-highlight border-bottom align-items-center"  style="height: 60px;">
-    <div class="div-img center-center rounded-circle overflow-hidden m-2" style="width : 45px; height : 45px;">
-        {% if element.user.profil_photo%}
-        <img class="w-100 h-auto" src="{{ element.user.profil_photo.url }}" style="">
-        {% else %}
-        <img class="w-100 h-auto" src="{% static 'images/default_profile.png'%}" style="">
-        {% endif %}
+    <div class="ms-2">
+        <div class="d-flex justify-content-center align-items-center rounded-circle p-auto" style="width : 45px; height : 45px; overflow: hidden;">
+          {% if element.user.profil_photo %}
+            <img class="img-fluid rounded-circle w-100 h-100" src={{ element.user.profil_photo.url }} alt="photo de profil personnalisée de l'utilisateur">
+            {% else %}
+            <img class="img-fluid rounded-circle" src="{% static 'images/default_profile.png'%}" alt="photo de profil par default de l'utilisateur">
+            {% endif %}
+        </div>
     </div>
     {% if element|model_type == 'Ticket' %}
         <p class="my-0 p-2 bd-highlight">{%get_poster_display element.user%} demandé une critique</p>

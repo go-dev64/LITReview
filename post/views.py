@@ -37,8 +37,7 @@ def home(request):
 
 
 def get_photo(user, photo_form):
-    """define photo uploader and save photo
-
+    """Create Photo instance , define photo uploader and save photo.
     Args:
         request (_type_): _description_
         photo_form (_type_): photo form
@@ -53,7 +52,7 @@ def get_photo(user, photo_form):
 
 
 def get_ticket(user, ticket_form):
-    """
+    """Create Ticket instance, definie ticket creator.
     Args:
         request (_type_): _description_
         ticket_form (_type_): _description_
@@ -67,6 +66,16 @@ def get_ticket(user, ticket_form):
 
 
 def get_ticket_with_photo(user, ticket_form, photo_form):
+    """Create Ticket instance with photo.
+
+    Args:
+        user (_type_): _description_
+        ticket_form (_type_): _description_
+        photo_form (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     photo = get_photo(user, photo_form)
     ticket = get_ticket(user, ticket_form)
     ticket.image = photo
@@ -74,6 +83,16 @@ def get_ticket_with_photo(user, ticket_form, photo_form):
 
 
 def get_review(user, review_form, ticket):
+    """_summary_
+
+    Args:
+        user (_type_): _description_
+        review_form (_type_): _description_
+        ticket (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     review = review_form.save(commit=False)
     review.ticket = ticket
     review.user = user

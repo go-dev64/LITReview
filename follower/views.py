@@ -8,6 +8,14 @@ from follower.forms import FollowUsersForm, DeleteFollowUserForm
 
 @login_required
 def follower_page(request):
+    """
+
+    Args:
+        request (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     request.user.user_followed_by_user_and_followers()
     if request.method == "POST":
         form = FollowUsersForm(request.POST)
@@ -35,6 +43,15 @@ def follower_page(request):
 
 
 def delete_user_follow(request, user_follow_id):
+    """delete user of user followed list
+
+    Args:
+        request (_type_): _description_
+        user_follow_id (_type_): User instance
+
+    Returns:
+        _type_: _description_
+    """
     delete_form = DeleteFollowUserForm()
     if request.method == "POST":
         if "delete_followed_user" in request.POST:

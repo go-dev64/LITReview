@@ -1,16 +1,14 @@
 {% load static %}
 <div class="container w-75">
     <div class="card mb-3 align-items-center">
-      <div class="div-img center-center rounded-circle overflow-hidden m-2" style="width : 200px; height : 200px;">
-        {% if user.profil_photo %}
-            <div class="img ">
-              <img class="avatar" src={{ user.profil_photo.url }} alt="photo de profil personnalisée de l'utilisateur">
+      <div class="mt-3">
+            <div class="d-flex justify-content-center align-items-center rounded-circle p-auto" style="width: 200px; height: 200px; overflow: hidden;">
+              {% if user.profil_photo %}
+                <img class="img-fluid rounded-circle" src={{ user.profil_photo.url }} alt="photo de profil personnalisée de l'utilisateur">
+                {% else %}
+                <img class="img-fluid rounded-circle" src="{% static 'images/default_profile.png'%}" alt="photo de profil par default de l'utilisateur">
+                {% endif %}
             </div>
-            {% else %}
-            <div class="img">
-              <img class="avatar" src="{% static 'images/default_profile.png'%}" alt="photo de profil par default de l'utilisateur">
-            </div>
-            {% endif %}
       </div>
       <div class="card-body">
         <h5 class="card-title">Hello, {{user}} </h5>
