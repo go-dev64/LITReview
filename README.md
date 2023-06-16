@@ -58,8 +58,10 @@ Elle utilse les languages suivant:
 ## <a id = installation>Installation</a>
 ***
 > **Installation** > Python doit etre instalé sur votre machine.
-
-Toutes les opérations suivantes seront exécutées dans ce répertoire courant.
+***
+### *Telecharger ou cloner les fichiers du repository GITHUB dans le dossier de votre choix, puis deplacer vous dans le dossier "LITReview"*.
+***
+Toutes les opérations suivantes seront exécutées dans ce répertoire "LITReview".
 
 ### _**Création environnement Virtuel**_
 
