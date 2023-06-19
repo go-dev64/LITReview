@@ -1,9 +1,5 @@
 from django.urls import path
 from allauth.account import views as account_views
-from django.contrib.auth.views import (
-    PasswordChangeDoneView,
-)
-from allauth.account import views as account_views
 from . import views
 
 urlpatterns = [

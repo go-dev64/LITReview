@@ -23,8 +23,8 @@ def follower_page(request):
             form = form.cleaned_data["user_to_follow"]
         try:
             user_to_follow = get_object_or_404(User, username=form)
-        except:
-            messages.error(request, f"Utilisateur inconnue. Merci de renseigner un utilisateur connue!")
+        except Exception:
+            messages.error(request, "Utilisateur inconnue. Merci de renseigner un utilisateur connue!")
             return redirect("follower_page")
         else:
             request.user.following.add(user_to_follow)

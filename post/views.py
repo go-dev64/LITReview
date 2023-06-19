@@ -17,9 +17,7 @@ def home(request):
     reviews = models.Review.objects.filter(Q(user=request.user) | Q(user__in=request.user.following.all()))
     reviews = reviews.annotate(content_type=Value("REVIEW", CharField()))
 
-    tickets = models.Ticket.objects.filter(Q(user=request.user) | Q(user__in=request.user.following.all())).exclude(
-        review__in=reviews
-    )
+    tickets = models.Ticket.objects.filter(Q(user=request.user) | Q(user__in=request.user.following.all()))
     tickets = tickets.annotate(content_type=Value("TICKET", CharField()))
 
     posts = sorted(
@@ -123,11 +121,11 @@ def create_ticket(request):
                 ticket = get_ticket_with_photo(request.user, ticket_form, photo_form)
 
             ticket.save()
-            messages.success(request, f"Ticket créée avec succés.")
+            messages.success(request, "Ticket créée avec succés.")
             return redirect("home")
 
         else:
-            messages.error(request, f"Ooppps il'y a eu un problème....")
+            messages.error(request, "Ooppps il'y a eu un problème....")
             return redirect("post/create_ticket.html")
 
     my_forms = [ticket_form, photo_form]
@@ -158,20 +156,20 @@ def edit_ticket(request, ticket_id):
             if all([ticket_form.is_valid(), new_photo_form.is_valid()]):
                 if new_photo_form.cleaned_data["image"] is None:
                     ticket_form.save()
-                    messages.success(request, f"Ticket modifié avec succés.")
+                    messages.success(request, "Ticket modifié avec succés.")
                     return redirect("home")
 
                 else:
                     ticket = get_ticket_with_photo(request.user, ticket_form, new_photo_form)
                     ticket.save()
-                    messages.success(request, f"Ticket modifié avec succés.")
+                    messages.success(request, "Ticket modifié avec succés.")
                     return redirect("home")
 
         if "delete_ticket" in request.POST:
             delete_form = forms.DeleteTicketForm(request.POST)
             if delete_form.is_valid():
                 ticket.delete()
-                messages.success(request, f"Ticket supprimé avec succés.")
+                messages.success(request, "Ticket supprimé avec succés.")
                 return redirect("home")
 
     my_forms = [ticket_form, photo_form]
@@ -214,7 +212,7 @@ def create_review(request):
 
             ticket.save()
             get_review(request.user, review_form, ticket)
-            messages.success(request, f"Critique publiée avec succés.")
+            messages.success(request, "Critique publiée avec succés.")
             return redirect("home")
 
     my_forms = [ticket_form, photo_form, review_form]
@@ -240,7 +238,7 @@ def review_ticket(request, ticket_id):
         review_form = forms.ReviewForm(request.POST)
         if review_form.is_valid():
             get_review(request.user, review_form, ticket)
-            messages.success(request, f"Critique publiée avec succés.")
+            messages.success(request, "Critique publiée avec succés.")
             return redirect("home")
 
     context = {
@@ -270,7 +268,7 @@ def edit_review(request, review_id):
             if review_form.is_valid():
                 review_modified = review_form.save(commit=False)
                 review_modified.save()
-                messages.success(request, f"Critique publiée avec succés.")
+                messages.success(request, "Critique modifiée avec succés.")
                 return redirect("home")
             else:
                 messages.error(request, review_form.errors)
@@ -280,7 +278,7 @@ def edit_review(request, review_id):
             delete_form = forms.DeleteReview(request.POST)
             if delete_form.is_valid():
                 review.delete()
-                messages.success(request, f"Critique supprimée avec succés.")
+                messages.success(request, "Critique supprimée avec succés.")
                 return redirect("home")
 
     context = {
