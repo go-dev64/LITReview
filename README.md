@@ -16,7 +16,7 @@ Son objectif est de commercialiser un produit, permettant à une communauté d'u
 
 </center>
 
-# Projet : Application de gestion de tournoi d'échec
+# Projet : Application Web LITReview
 1. [Général / Présentation](#Général)
 2. [Technologies](#technologies)
 3. [Installation](#installation)
